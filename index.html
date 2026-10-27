@@ -16,7 +16,8 @@
 <meta property="og:image:height" content="630">
 <meta name="theme-color" content="#ffffff">
 <link rel="icon" href="images/favicon.png" type="image/png">
-<link rel="preload" as="image" href="images/hall.jpg">
+<link rel="preload" as="image" href="images/main.jpg" media="(min-width: 768px)">
+<link rel="preload" as="image" href="images/main-sm.jpg" media="(max-width: 767px)">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,500;125,600;125,700;125,800&display=swap">
@@ -127,12 +128,12 @@
   <!-- 01 KV -->
   <section id="sec01" class="sec01 main" aria-labelledby="kv-title">
     <div class="contWrap">
-      <video class="videoWrap" autoplay muted loop playsinline preload="metadata" poster="images/hall.jpg">
-        <source src="video/intro.mp4" type="video/mp4">
-      </video>
+      <picture class="kvBg">
+        <source media="(max-width: 767px)" srcset="images/main-sm.jpg">
+        <img src="images/main.jpg" alt="라이칸짐 연수점 메인 홀" fetchpriority="high">
+      </picture>
       <div class="kvShade" aria-hidden="true"></div>
       <div class="kvInner">
-        <img src="images/logo-h-white.png" class="introLogo" alt="LYCAN FITNESS" width="1872" height="758">
         <div class="motionTitle">
           <p class="Display5 introText1" id="kv-title"><span class="w">BEYOND</span> <span class="w">LIMITS</span></p>
         </div>

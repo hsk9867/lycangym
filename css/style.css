@@ -162,11 +162,11 @@ html.menu-open { overflow: hidden; }
 /* ---------- 01 KV ---------- */
 .sec01 { background: #000; color: var(--white); }
 .sec01 .contWrap { height: 100svh; min-height: 560px; display: flex; flex-direction: column; justify-content: flex-end; overflow: hidden; }
-.sec01 .videoWrap { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.06); transition: opacity 1.2s ease .2s, transform 1.6s cubic-bezier(.16,1,.3,1) .2s; }
-html.intro-done .sec01 .videoWrap, html.intro-skip .sec01 .videoWrap { opacity: 1; transform: none; }
+.sec01 .kvBg { position: absolute; inset: 0; display: block; }
+.sec01 .kvBg img { width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: 0; transform: scale(1.06); transition: opacity 1.2s ease .2s, transform 1.6s cubic-bezier(.16,1,.3,1) .2s; }
+html.intro-done .sec01 .kvBg img, html.intro-skip .sec01 .kvBg img { opacity: 1; transform: none; }
 .kvShade { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.78) 0%, rgba(0,0,0,.25) 45%, rgba(0,0,0,.35) 100%); }
 .kvInner { position: relative; padding: 0 var(--pad) 96px; display: flex; flex-direction: column; gap: 20px; }
-.kvInner .introLogo { width: min(44vw, 200px); height: auto; margin-bottom: 8px; }
 .kvInner .Display5 .w { display: inline-block; overflow: hidden; vertical-align: top; }
 .kvInner .Display5 .w::after { content: ""; }
 .kvText .Body2XL { color: rgba(255,255,255,.88); }
@@ -177,11 +177,9 @@ html.intro-done .sec01 .videoWrap, html.intro-skip .sec01 .videoWrap { opacity: 
 html.intro-done .kvInner > *, html.intro-skip .kvInner > * { opacity: 1; transform: none; }
 html.intro-done .kvInner > :nth-child(2), html.intro-skip .kvInner > :nth-child(2) { transition-delay: .15s; }
 html.intro-done .kvInner > :nth-child(3), html.intro-skip .kvInner > :nth-child(3) { transition-delay: .3s; }
-html.intro-done .kvInner > :nth-child(4), html.intro-skip .kvInner > :nth-child(4) { transition-delay: .45s; }
 @media (min-width: 1024px) {
   .sec01 .contWrap { min-height: 700px; }
   .kvInner { padding-bottom: 120px; gap: 24px; max-width: 1760px; margin: 0 auto; width: 100%; }
-  .kvInner .introLogo { width: 240px; }
   .kvMeta { flex-direction: row; gap: 40px; font-size: 13px; }
 }
 
