@@ -143,12 +143,12 @@ html.menu-open { overflow: hidden; }
 .kvCopy { padding: 8px var(--pad) 4px; display: flex; flex-direction: column; gap: 10px; animation: kvIn 1s cubic-bezier(.16,1,.3,1) .1s both; }
 .kvCopy .BodyXL { color: var(--red); }
 .kvCopy .HeadL { color: var(--white); }
-.kvSlider { position: relative; animation: kvIn 1s cubic-bezier(.16,1,.3,1) .2s both; }
-.kvTrack { display: flex; gap: 10px; padding: 0 var(--pad); overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch; scroll-padding: 0 var(--pad); }
+.kvSlider { position: relative; padding: 0 var(--pad); animation: kvIn 1s cubic-bezier(.16,1,.3,1) .2s both; }
+.kvTrack { display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
 .kvTrack::-webkit-scrollbar { display: none; }
 .kvTrack li { flex: 0 0 86%; scroll-snap-align: start; aspect-ratio: 4/3; overflow: hidden; border-radius: 14px; background: #111; }
 .kvTrack li img { width: 100%; height: 100%; object-fit: cover; }
-.kvDots { display: flex; justify-content: center; gap: 6px; margin-top: 16px; padding: 0 var(--pad); }
+.kvDots { display: flex; justify-content: center; gap: 6px; margin-top: 16px; }
 .kvDots button { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,.3); transition: background .3s, width .3s; }
 .kvDots button.on { background: var(--red); width: 18px; border-radius: 3px; }
 @keyframes kvIn { from { opacity: 0; transform: translateY(24px); } }
@@ -174,7 +174,7 @@ html.menu-open { overflow: hidden; }
 .kvTop { display: contents; }
 @media (min-width: 1024px) {
   /* PC: 영상·문구·슬라이드가 한 화면(100vh)에 들어오도록 영상 높이를 남는 공간에 맞춤 */
-  .sec01 .contWrap { height: 100vh; min-height: 600px; padding: calc(var(--header-h) + 24px) 0 64px; gap: 28px; max-width: 1760px; margin: 0 auto; }
+  .sec01 .contWrap { height: 100vh; min-height: 600px; padding: calc(var(--header-h) + 24px) 0 104px; gap: 28px; max-width: 1760px; margin: 0 auto; }
   .kvTop { display: flex; align-items: center; gap: 56px; flex: 1 1 auto; min-height: 0; padding: 0 var(--pad); }
   .kvVideo { flex: 0 1 auto; height: 100%; min-height: 0; padding: 0; animation-delay: 0s; }
   .kvVideo .videoWrap { height: 100%; width: auto; max-width: 100%; aspect-ratio: 16/9; border-radius: 20px; }

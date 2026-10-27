@@ -42,7 +42,7 @@
       kvDots.appendChild(b);
     });
     var dots = Array.prototype.slice.call(kvDots.children);
-    function perView() { var w = slides[0].offsetWidth, gap = parseFloat(getComputedStyle(kvTrack).gap) || 0; return Math.max(1, Math.round((kvTrack.clientWidth - 2 * slides[0].offsetLeft + gap) / (w + gap))); }
+    function perView() { var w = slides[0].offsetWidth, gap = parseFloat(getComputedStyle(kvTrack).gap) || 0; return Math.max(1, Math.round((kvTrack.clientWidth + gap) / (w + gap))); }
     function maxIdx() { return Math.max(0, slides.length - perView()); }
     function goKv(i, user) {
       kvIdx = Math.min(Math.max(0, i), maxIdx());
