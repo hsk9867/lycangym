@@ -244,21 +244,27 @@ html.menu-open { overflow: hidden; }
   .boxWrap .textBox { padding: 56px; }
 }
 
-/* ---------- 04-2 Pilates ---------- */
-.sec04b { padding: clamp(60px, 10vw, 140px) 0; }
-.split { display: grid; grid-template-columns: 1fr; gap: 32px; }
-.split .media { aspect-ratio: 4/3; overflow: hidden; background: var(--gray1); }
-.split .media img { width: 100%; height: 100%; object-fit: cover; }
-.split .copy { display: flex; flex-direction: column; gap: 18px; }
-.split .copy .BodyXL { color: var(--red); }
-.split .copy .BodyXS { color: var(--gray5); }
-.checks { display: flex; flex-direction: column; gap: 8px; }
-.checks li { position: relative; padding-left: 22px; }
-.checks li::before { content: ""; position: absolute; left: 0; top: .55em; width: 10px; height: 10px; border-radius: 50%; background: var(--red); }
-.split .roundBtn { margin-top: 8px; }
+/* ---------- 04-2 Before & After ---------- */
+.sec04b { padding: clamp(60px, 10vw, 140px) 0; background: var(--white); }
+.sec04b .titleBox { display: flex; flex-direction: column; gap: 16px; margin-bottom: 36px; }
+.sec04b .titleBox .BodyXL { color: var(--red); }
+.sec04b .titleBox .BodyXS { color: var(--gray5); }
+.baSlider { position: relative; padding: 0 var(--pad); }
+.baTrack { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.baTrack::-webkit-scrollbar { display: none; }
+.baTrack li { flex: 0 0 80%; scroll-snap-align: start; aspect-ratio: 1/1; overflow: hidden; border-radius: 14px; background: var(--gray1); }
+.baTrack li img { width: 100%; height: 100%; object-fit: cover; }
+.baDots { display: flex; justify-content: center; gap: 6px; margin-top: 18px; }
+.baDots button { width: 6px; height: 6px; border-radius: 50%; background: var(--gray2); transition: background .3s, width .3s; }
+.baDots button.on { background: var(--red); width: 18px; border-radius: 3px; }
+@media (min-width: 768px) { .baTrack li { flex-basis: 46%; } }
 @media (min-width: 1024px) {
-  .split { grid-template-columns: 1fr 1fr; gap: 112px; align-items: center; }
-  .split .copy { gap: 24px; }
+  .sec04b .titleBox { margin-bottom: 48px; }
+  .baTrack { gap: 24px; }
+  .baTrack li { flex-basis: calc((100% - 48px) / 3); border-radius: 20px; }
+  .baDots { gap: 8px; margin-top: 28px; }
+  .baDots button { width: 8px; height: 8px; }
+  .baDots button.on { width: 24px; border-radius: 4px; }
 }
 
 /* ---------- 05 Reviews ---------- */

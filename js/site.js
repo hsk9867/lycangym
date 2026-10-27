@@ -32,45 +32,48 @@
     kvH.textContent = ''; kvH.appendChild(frag);
   }
 
-  // ---------- 메인 시설 사진 슬라이드: 자동 넘김 + 스와이프 + 점 표시 ----------
-  var kvTrack = document.getElementById('kvTrack'), kvDots = document.getElementById('kvDots');
-  if (kvTrack && kvDots) {
-    var slides = Array.prototype.slice.call(kvTrack.children), kvIdx = 0, kvTimer = null, kvPause = false;
+  // ---------- 가로 슬라이드(메인 시설 사진·비포애프터): 자동 넘김 + 스와이프 + 점 표시 ----------
+  function initSlider(track, dotsEl) {
+    var slides = Array.prototype.slice.call(track.children), idx = 0, timer = null, pause = false;
     slides.forEach(function (_, i) {
       var b = document.createElement('button'); b.type = 'button'; b.setAttribute('role', 'tab'); b.setAttribute('aria-label', (i + 1) + '번째 사진');
-      b.addEventListener('click', function () { goKv(i, true); });
-      kvDots.appendChild(b);
+      b.addEventListener('click', function () { go(i, true); });
+      dotsEl.appendChild(b);
     });
-    var dots = Array.prototype.slice.call(kvDots.children);
-    function perView() { var w = slides[0].offsetWidth, gap = parseFloat(getComputedStyle(kvTrack).gap) || 0; return Math.max(1, Math.round((kvTrack.clientWidth + gap) / (w + gap))); }
+    var dots = Array.prototype.slice.call(dotsEl.children);
+    function perView() { var w = slides[0].offsetWidth, gap = parseFloat(getComputedStyle(track).gap) || 0; return Math.max(1, Math.round((track.clientWidth + gap) / (w + gap))); }
     function maxIdx() { return Math.max(0, slides.length - perView()); }
-    function goKv(i, user) {
-      kvIdx = Math.min(Math.max(0, i), maxIdx());
-      kvTrack.scrollTo({ left: slides[kvIdx].offsetLeft - slides[0].offsetLeft, behavior: reduce ? 'auto' : 'smooth' });
+    function go(i, user) {
+      idx = Math.min(Math.max(0, i), maxIdx());
+      track.scrollTo({ left: slides[idx].offsetLeft - slides[0].offsetLeft, behavior: reduce ? 'auto' : 'smooth' });
       paint();
       if (user) restart();
     }
-    function paint() { dots.forEach(function (d, i) { d.classList.toggle('on', i === kvIdx); }); }
-    function tick() { if (document.hidden || kvPause) return; goKv(kvIdx >= maxIdx() ? 0 : kvIdx + 1); }
-    function restart() { clearInterval(kvTimer); if (!reduce) kvTimer = setInterval(tick, 3500); }
+    function paint() { dots.forEach(function (d, i) { d.classList.toggle('on', i === idx); }); }
+    function tick() { if (document.hidden || pause) return; go(idx >= maxIdx() ? 0 : idx + 1); }
+    function restart() { clearInterval(timer); if (!reduce) timer = setInterval(tick, 3500); }
     var st;
-    kvTrack.addEventListener('scroll', function () {
+    track.addEventListener('scroll', function () {
       clearTimeout(st);
       st = setTimeout(function () {
-        var x = kvTrack.scrollLeft, best = 0, bd = Infinity;
+        var x = track.scrollLeft, best = 0, bd = Infinity;
         slides.forEach(function (s, i) { var d = Math.abs(s.offsetLeft - slides[0].offsetLeft - x); if (d < bd) { bd = d; best = i; } });
-        kvIdx = Math.min(best, maxIdx()); paint();
+        idx = Math.min(best, maxIdx()); paint();
       }, 80);
     }, { passive: true });
-    kvTrack.addEventListener('pointerdown', function () { kvPause = true; }, { passive: true });
-    kvTrack.addEventListener('pointerup', function () { kvPause = false; restart(); }, { passive: true });
-    kvTrack.addEventListener('touchstart', function () { kvPause = true; }, { passive: true });
-    kvTrack.addEventListener('touchend', function () { kvPause = false; restart(); }, { passive: true });
-    kvTrack.addEventListener('mouseenter', function () { kvPause = true; });
-    kvTrack.addEventListener('mouseleave', function () { kvPause = false; });
-    window.addEventListener('resize', function () { goKv(kvIdx); });
+    track.addEventListener('pointerdown', function () { pause = true; }, { passive: true });
+    track.addEventListener('pointerup', function () { pause = false; restart(); }, { passive: true });
+    track.addEventListener('touchstart', function () { pause = true; }, { passive: true });
+    track.addEventListener('touchend', function () { pause = false; restart(); }, { passive: true });
+    track.addEventListener('mouseenter', function () { pause = true; });
+    track.addEventListener('mouseleave', function () { pause = false; });
+    window.addEventListener('resize', function () { go(idx); });
     paint(); restart();
   }
+  [['kvTrack', 'kvDots'], ['baTrack', 'baDots']].forEach(function (p) {
+    var t = document.getElementById(p[0]), d = document.getElementById(p[1]);
+    if (t && d && t.children.length) initSlider(t, d);
+  });
 
   // ---------- 헤더: 어두운 섹션 위에서는 흰색, 스크롤 다운 시 숨김 ----------
   var header = document.getElementById('header');
