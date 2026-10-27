@@ -196,6 +196,7 @@ html.menu-open { overflow: hidden; }
 .sec03 .headArea { display: flex; flex-direction: column; gap: 28px; margin-bottom: clamp(56px, 10vw, 140px); }
 .sec03 .title { display: flex; flex-direction: column; gap: 16px; }
 .sec03 .title .BodyXL { color: var(--red); }
+.sec03 .introTitle { line-height: 1; }
 .rollingText { display: flex; flex-direction: column; }
 .rollingText .roll { height: 1.05em; overflow: hidden; font-size: clamp(56px, 16vw, 120px); line-height: 1.05; }
 .rollingText .roll span { display: block; height: 1.05em; line-height: 1.05; animation: roll 10s cubic-bezier(.7,0,.2,1) infinite; }
@@ -206,7 +207,7 @@ html.menu-open { overflow: hidden; }
   .sec03 .headArea { flex-wrap: wrap; }
   .sec03 .title { flex: 0 1 auto; min-width: 0; }
   .rollingText { flex-direction: row; gap: clamp(16px, 2vw, 36px); align-items: baseline; }
-  .rollingText .roll, .rollingText .Display2 { font-size: clamp(80px, 6vw, 120px); }
+  .rollingText .roll, .rollingText .Display2, .sec03 .introTitle { font-size: clamp(80px, 6vw, 120px); }
   .rollingText .roll { overflow: visible; clip-path: inset(0 -100vw 0 0); }
   .sec03 .rightText { flex: 0 0 360px; max-width: 360px; margin-left: auto; }
 }
