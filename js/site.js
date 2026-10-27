@@ -113,39 +113,6 @@
   // 첫 그룹은 열어둠
   var firstBtn = gnb.querySelector('.gnbList .btn'); if (firstBtn) firstBtn.setAttribute('aria-expanded', 'true');
 
-  // ---------- 프로그램 탭 ----------
-  var tabs = Array.prototype.slice.call(document.querySelectorAll('.tabCategory li'));
-  var panels = Array.prototype.slice.call(document.querySelectorAll('.tabContent .panel'));
-  function activate(cat) {
-    tabs.forEach(function (t) { t.classList.toggle('active', t.getAttribute('data-category') === cat); t.setAttribute('aria-selected', t.getAttribute('data-category') === cat ? 'true' : 'false'); });
-    panels.forEach(function (p) { p.classList.toggle('active', p.getAttribute('data-panel') === cat); });
-    updateNav();
-  }
-  tabs.forEach(function (t) { t.addEventListener('click', function (e) { e.preventDefault(); activate(t.getAttribute('data-category')); }); });
-  document.querySelectorAll('a[data-tab]').forEach(function (a) { a.addEventListener('click', function () { activate(a.getAttribute('data-tab')); }); });
-
-  // 카드 스와이퍼 좌우 버튼 (PC)
-  var prev = document.querySelector('.swiper-button-prev'), next = document.querySelector('.swiper-button-next');
-  function activeSwiper() { var p = document.querySelector('.tabContent .panel.active'); return p ? p.querySelector('.swiper') : null; }
-  function updateNav() {
-    var s = activeSwiper(); if (!s || !prev) return;
-    prev.disabled = s.scrollLeft <= 2;
-    next.disabled = s.scrollLeft + s.clientWidth >= s.scrollWidth - 2;
-  }
-  function step(dir) {
-    var s = activeSwiper(); if (!s) return;
-    var card = s.querySelector('.card'); var w = card ? card.offsetWidth + 24 : 300;
-    s.scrollBy({ left: dir * w, behavior: 'smooth' });
-    setTimeout(updateNav, 450);
-  }
-  if (prev && next) {
-    prev.addEventListener('click', function () { step(-1); });
-    next.addEventListener('click', function () { step(1); });
-    document.querySelectorAll('.swiper').forEach(function (s) { s.addEventListener('scroll', updateNav, { passive: true }); });
-    window.addEventListener('resize', updateNav);
-    updateNav();
-  }
-
   // ---------- 등장 효과 ----------
   var io = 'IntersectionObserver' in window ? new IntersectionObserver(function (entries) {
     entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
