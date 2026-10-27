@@ -164,26 +164,6 @@ html.menu-open { overflow: hidden; }
   .kvDots button.on { width: 24px; border-radius: 4px; }
 }
 
-/* ---------- 02 Story (검정, 가로 트랙) ---------- */
-.sec02 { background: #000; color: var(--white); }
-.sec02 .sticky { position: sticky; top: 0; height: 100svh; min-height: 600px; display: flex; flex-direction: column; justify-content: center; gap: 48px; overflow: hidden; padding: calc(var(--header-h) + 24px) 0 48px; }
-.sec02 .mainTopTitle { display: flex; flex-direction: column; gap: 16px; padding: 0 var(--pad); max-width: 1760px; margin: 0 auto; width: 100%; }
-.sec02 .mainTopTitle .BodyXL { color: var(--red); }
-.sec02 .mainTopTitle .HeadL { color: var(--white); }
-.sec02 .track { display: flex; align-items: center; gap: clamp(24px, 4vw, 64px); padding-left: var(--pad); width: max-content; will-change: transform; }
-.sec02 .clip { position: relative; width: min(78vw, 720px); aspect-ratio: 16/9; overflow: hidden; background: #111; flex: none; }
-.sec02 .clip video, .sec02 .clip img { width: 100%; height: 100%; object-fit: cover; }
-.sec02 .clip .textArea { position: absolute; left: 20px; bottom: 16px; color: var(--white); text-shadow: 0 2px 20px rgba(0,0,0,.5); }
-.sec02 .letter { font-family: var(--display); font-stretch: 125%; font-weight: 700; font-size: clamp(180px, 42vw, 560px); line-height: .8; letter-spacing: -.04em; color: var(--white); flex: none; transform: translateY(-.04em); }
-.sec02 .clip.last { margin-right: var(--pad); }
-@media (min-width: 1024px) { .sec02 { height: 320vh; } }
-@media (max-width: 1023px) {
-  .sec02 .sticky { position: relative; height: auto; min-height: 0; }
-  .sec02 .track { overflow-x: auto; width: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
-  .sec02 .track::-webkit-scrollbar { display: none; }
-  .sec02 .letter { font-size: 48vw; }
-}
-
 /* ---------- 03 Introduce ---------- */
 .sec03 { padding: clamp(80px, 14vw, 180px) 0 clamp(60px, 10vw, 120px); }
 .sec03 .headArea { display: flex; flex-direction: column; gap: 28px; margin-bottom: clamp(56px, 10vw, 140px); }

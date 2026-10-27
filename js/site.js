@@ -47,7 +47,7 @@
 
   // ---------- 헤더: 어두운 섹션 위에서는 흰색, 스크롤 다운 시 숨김 ----------
   var header = document.getElementById('header');
-  var darkSections = Array.prototype.slice.call(document.querySelectorAll('.sec01, .sec02'));
+  var darkSections = Array.prototype.slice.call(document.querySelectorAll('.sec01'));
   var lastY = 0;
   function onScroll() {
     var y = window.scrollY || 0;
@@ -118,21 +118,6 @@
     window.addEventListener('resize', updateNav);
     updateNav();
   }
-
-  // ---------- 스토리 섹션: 스크롤에 따라 가로 트랙 이동 (PC) ----------
-  var story = document.getElementById('story'), track = document.getElementById('storyTrack');
-  function storyScroll() {
-    if (!story || !track) return;
-    if (window.innerWidth < 1024 || reduce) { track.style.transform = ''; return; }
-    var r = story.getBoundingClientRect();
-    var total = story.offsetHeight - window.innerHeight;
-    var prog = Math.min(1, Math.max(0, -r.top / total));
-    var dist = track.scrollWidth - window.innerWidth;
-    track.style.transform = 'translate3d(' + (-prog * dist) + 'px,0,0)';
-  }
-  window.addEventListener('scroll', storyScroll, { passive: true });
-  window.addEventListener('resize', storyScroll);
-  storyScroll();
 
   // ---------- 등장 효과 ----------
   var io = 'IntersectionObserver' in window ? new IntersectionObserver(function (entries) {
