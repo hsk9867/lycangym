@@ -5,6 +5,33 @@
 
   doc.classList.add('intro-done');
 
+  // ---------- 메인 문구: 글자 단위로 쪼개 순차 등장 ('변화'는 빨강 강조) ----------
+  var kvH = document.querySelector('.kvCopy .HeadL');
+  if (kvH) {
+    var idx = 0, frag = document.createDocumentFragment();
+    Array.prototype.slice.call(kvH.childNodes).forEach(function (node) {
+      if (node.nodeType === 3) {
+        var txt = node.textContent, i = 0;
+        while (i < txt.length) {
+          var em = txt.indexOf('변화', i) === i;
+          var piece = em ? '변화' : txt.charAt(i);
+          var wrap = em ? document.createElement('span') : null;
+          if (wrap) wrap.className = 'em';
+          for (var k = 0; k < piece.length; k++) {
+            var sp = document.createElement('span');
+            sp.className = 'ch' + (piece.charAt(k) === ' ' ? ' sp' : '');
+            sp.textContent = piece.charAt(k) === ' ' ? ' ' : piece.charAt(k);
+            sp.style.setProperty('--i', idx++);
+            (wrap || frag).appendChild(sp);
+          }
+          if (wrap) frag.appendChild(wrap);
+          i += piece.length;
+        }
+      } else { frag.appendChild(node.cloneNode(true)); }
+    });
+    kvH.textContent = ''; kvH.appendChild(frag);
+  }
+
   // ---------- 메인 시설 사진 슬라이드: 자동 넘김 + 스와이프 + 점 표시 ----------
   var kvTrack = document.getElementById('kvTrack'), kvDots = document.getElementById('kvDots');
   if (kvTrack && kvDots) {

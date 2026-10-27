@@ -152,11 +152,29 @@ html.menu-open { overflow: hidden; }
 .kvDots button { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,.3); transition: background .3s, width .3s; }
 .kvDots button.on { background: var(--red); width: 18px; border-radius: 3px; }
 @keyframes kvIn { from { opacity: 0; transform: translateY(24px); } }
+/* 기구 브랜드 로고 마키 */
+.kvBrands { padding-top: 8px; animation: kvIn 1s cubic-bezier(.16,1,.3,1) .3s both; }
+.brandMarquee { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
+.brandTrack { display: flex; align-items: center; gap: 48px; width: max-content; padding-left: 48px; animation: brandRun 28s linear infinite; }
+.brandMarquee:hover .brandTrack { animation-play-state: paused; }
+.brandTrack li { flex: none; }
+.brandTrack img { height: 26px; width: auto; opacity: .85; }
+@keyframes brandRun { to { transform: translate3d(calc(-100% / 3), 0, 0); } }
+@media (prefers-reduced-motion: reduce) { .brandTrack { animation: none; } }
+/* 메인 문구 타이포 효과: 글자가 아래에서 차례로 떠오름 */
+.kvCopy .HeadL .ch { display: inline-block; opacity: 0; transform: translateY(.7em) rotate(3deg); animation: chIn .8s cubic-bezier(.16,1,.3,1) forwards; animation-delay: calc(.35s + var(--i) * .04s); }
+.kvCopy .HeadL .ch.sp { width: .28em; }
+.kvCopy .HeadL .em { color: var(--red); }
+.kvCopy .BodyXL { position: relative; display: inline-block; align-self: flex-start; }
+.kvCopy .BodyXL::after { content: ""; display: block; height: 2px; width: 100%; background: var(--red); transform: scaleX(0); transform-origin: left; animation: lineIn 1s cubic-bezier(.16,1,.3,1) .9s forwards; margin-top: 6px; }
+@keyframes chIn { to { opacity: 1; transform: none; } }
+@keyframes lineIn { to { transform: scaleX(1); } }
+@media (prefers-reduced-motion: reduce) { .kvCopy .HeadL .ch { opacity: 1; transform: none; animation: none; } .kvCopy .BodyXL::after { transform: none; animation: none; } }
 @media (min-width: 768px) { .kvTrack li { flex-basis: 48%; } }
 .kvTop { display: contents; }
 @media (min-width: 1024px) {
   /* PC: 영상·문구·슬라이드가 한 화면(100vh)에 들어오도록 영상 높이를 남는 공간에 맞춤 */
-  .sec01 .contWrap { height: 100vh; min-height: 600px; padding: calc(var(--header-h) + 24px) 0 48px; gap: 28px; max-width: 1760px; margin: 0 auto; }
+  .sec01 .contWrap { height: 100vh; min-height: 600px; padding: calc(var(--header-h) + 24px) 0 64px; gap: 28px; max-width: 1760px; margin: 0 auto; }
   .kvTop { display: flex; align-items: center; gap: 56px; flex: 1 1 auto; min-height: 0; padding: 0 var(--pad); }
   .kvVideo { flex: 0 1 auto; height: 100%; min-height: 0; padding: 0; animation-delay: 0s; }
   .kvVideo .videoWrap { height: 100%; width: auto; max-width: 100%; aspect-ratio: 16/9; border-radius: 20px; }
@@ -165,6 +183,9 @@ html.menu-open { overflow: hidden; }
   .kvSlider { flex: 0 0 auto; }
   .kvTrack { gap: 24px; }
   .kvTrack li { flex-basis: calc((100% - 72px) / 4); border-radius: 20px; }
+  .kvBrands { padding-top: 4px; }
+  .brandTrack { gap: 96px; padding-left: 96px; animation-duration: 36s; }
+  .brandTrack img { height: 34px; }
   .kvDots { gap: 8px; margin-top: 24px; }
   .kvDots button { width: 8px; height: 8px; }
   .kvDots button.on { width: 24px; border-radius: 4px; }
