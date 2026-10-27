@@ -54,35 +54,12 @@ small { font-weight: 500; }
 
 .contentArea { padding: 0 var(--pad); margin: 0 auto; width: 100%; max-width: 1760px; }
 
-/* ---------- 인트로 (정글짐 방식) ---------- */
-html.intro-open { overflow: hidden; }
-html.intro-skip .intro { display: none; }
-.intro { position: fixed; inset: 0; z-index: 200; background: #050505; overflow: hidden; cursor: pointer; user-select: none; -webkit-user-select: none; outline: none; touch-action: none; }
-.intro-stage { position: absolute; inset: 0; transform-origin: 50% 45%; will-change: transform, opacity; transition: transform .8s cubic-bezier(.16, 1, .3, 1), opacity .65s ease; }
-.intro.leaving { pointer-events: none; }
-.intro.leaving .intro-stage { opacity: 0; transform: scale(1.06); }
-.intro-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.08); animation: introIn 2s cubic-bezier(.16, 1, .3, 1) .1s forwards; }
-.intro-shade { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 45%, rgba(0,0,0,.15), rgba(0,0,0,.6) 70%), linear-gradient(to top, rgba(0,0,0,.6), transparent 40%); }
-.intro-logo { position: absolute; left: 50%; top: 44%; width: min(46vw, 260px); height: auto; transform: translate(-50%, -50%) translateY(16px); opacity: 0; animation: introLogo 1.4s cubic-bezier(.16, 1, .3, 1) .6s forwards; filter: drop-shadow(0 10px 40px rgba(0,0,0,.5)); }
-.intro-cue { position: absolute; left: 50%; bottom: max(40px, env(safe-area-inset-bottom, 0px) + 32px); transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 14px 34px; border: 1px solid rgba(255,255,255,.6); border-radius: 999px; color: #fff; font-family: var(--display); font-stretch: 125%; font-weight: 700; font-size: 16px; letter-spacing: .18em; text-indent: .18em; background: rgba(0,0,0,.25); backdrop-filter: blur(6px); opacity: 0; animation: introLogo 1s ease 1.4s forwards; transition: background .2s, border-color .2s; }
-.intro-cue small { font-family: var(--body); font-size: 12px; letter-spacing: 0; text-indent: 0; color: rgba(255,255,255,.7); }
-.intro-cue:hover { background: rgba(225,6,0,.85); border-color: var(--red); }
-@keyframes introIn { to { opacity: 1; transform: none; } }
-@keyframes introLogo { to { opacity: 1; transform: translate(-50%, -50%); } }
-.intro-cue { animation-name: cueIn; }
-@keyframes cueIn { to { opacity: 1; } }
-@media (prefers-reduced-motion: reduce) {
-  .intro-video, .intro-logo, .intro-cue { opacity: 1; transform: none; animation: none; }
-  .intro-logo { transform: translate(-50%, -50%); }
-  .intro-stage { transition: opacity .3s ease; }
-}
-
 /* ---------- 하단 진행 라인 ---------- */
 .bottomProgressLine { position: fixed; left: 0; bottom: 0; width: 100vw; padding: 0 var(--pad) 20px; z-index: 90; pointer-events: none; opacity: 0; transition: opacity .4s; mix-blend-mode: difference; color: #fff; }
 .bottomProgressLine.rule { mix-blend-mode: normal; color: transparent; z-index: 89; }
 .bottomProgressLine.rule .line p { border-top-color: var(--red); }
 .bottomProgressLine.rule .arrow { color: transparent; }
-html.intro-done .bottomProgressLine, html.intro-skip .bottomProgressLine { opacity: 1; }
+html.intro-done .bottomProgressLine { opacity: 1; }
 .bottomProgressLine .line { display: flex; gap: 24px; }
 .bottomProgressLine .line p { border-top: 2px solid transparent; padding-top: 8px; }
 .bottomProgressLine .line p.left { width: 42%; }
@@ -92,7 +69,6 @@ html.intro-done .bottomProgressLine, html.intro-skip .bottomProgressLine { opaci
 
 /* ---------- 헤더 ---------- */
 .header { position: fixed; top: 0; left: 0; width: 100%; z-index: 120; transition: transform .35s, background .3s; }
-html.intro-open .header { opacity: 0; }
 .headerWrap { position: relative; display: flex; align-items: center; justify-content: space-between; height: var(--header-h); padding: 0 var(--pad); background: var(--white); transition: background .3s, color .3s; }
 .header.onDark .headerWrap { background: transparent; color: var(--white); }
 .header.onDark .roundBtn { border-color: var(--white); color: var(--white); }
@@ -159,28 +135,29 @@ html.menu-open { overflow: hidden; }
 .reveal.in { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
 
-/* ---------- 01 KV ---------- */
+/* ---------- 01 KV (bigbrogym 식: 검정 배경 + 영상 + 시설 사진 슬라이드) ---------- */
 .sec01 { background: #000; color: var(--white); }
-.sec01 .contWrap { height: 100svh; min-height: 560px; display: flex; flex-direction: column; justify-content: flex-end; overflow: hidden; }
-.sec01 .kvBg { position: absolute; inset: 0; display: block; }
-.sec01 .kvBg img { width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: 0; transform: scale(1.06); transition: opacity 1.2s ease .2s, transform 1.6s cubic-bezier(.16,1,.3,1) .2s; }
-html.intro-done .sec01 .kvBg img, html.intro-skip .sec01 .kvBg img { opacity: 1; transform: none; }
-.kvShade { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.78) 0%, rgba(0,0,0,.25) 45%, rgba(0,0,0,.35) 100%); }
-.kvInner { position: relative; padding: 0 var(--pad) 96px; display: flex; flex-direction: column; gap: 20px; }
-.kvInner .Display5 .w { display: inline-block; overflow: hidden; vertical-align: top; }
-.kvInner .Display5 .w::after { content: ""; }
-.kvText .Body2XL { color: rgba(255,255,255,.88); }
-.kvBtns { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
-.kvMeta { position: absolute; right: var(--pad); top: calc(var(--header-h) + 28px); display: flex; flex-direction: column; gap: 6px; text-align: right; color: rgba(255,255,255,.7); font-family: var(--display); font-stretch: 125%; letter-spacing: .08em; font-size: 11px; }
-/* 글자 애니메이션 (인트로 닫힌 뒤) */
-.kvInner > * { opacity: 0; transform: translateY(30px); transition: opacity 1s cubic-bezier(.16,1,.3,1), transform 1s cubic-bezier(.16,1,.3,1); }
-html.intro-done .kvInner > *, html.intro-skip .kvInner > * { opacity: 1; transform: none; }
-html.intro-done .kvInner > :nth-child(2), html.intro-skip .kvInner > :nth-child(2) { transition-delay: .15s; }
-html.intro-done .kvInner > :nth-child(3), html.intro-skip .kvInner > :nth-child(3) { transition-delay: .3s; }
+.sec01 .contWrap { padding: calc(var(--header-h) + 16px) 0 40px; display: flex; flex-direction: column; gap: 20px; }
+.kvVideo { padding: 0 var(--pad); animation: kvIn 1s cubic-bezier(.16,1,.3,1) both; }
+.kvVideo .videoWrap { width: 100%; aspect-ratio: 16/9; object-fit: cover; border-radius: 14px; background: #111; }
+.kvSlider { position: relative; animation: kvIn 1s cubic-bezier(.16,1,.3,1) .15s both; }
+.kvTrack { display: flex; gap: 10px; padding: 0 var(--pad); overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch; scroll-padding: 0 var(--pad); }
+.kvTrack::-webkit-scrollbar { display: none; }
+.kvTrack li { flex: 0 0 86%; scroll-snap-align: start; aspect-ratio: 4/3; overflow: hidden; border-radius: 14px; background: #111; }
+.kvTrack li img { width: 100%; height: 100%; object-fit: cover; }
+.kvDots { display: flex; justify-content: center; gap: 6px; margin-top: 16px; padding: 0 var(--pad); }
+.kvDots button { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,.3); transition: background .3s, width .3s; }
+.kvDots button.on { background: var(--red); width: 18px; border-radius: 3px; }
+@keyframes kvIn { from { opacity: 0; transform: translateY(24px); } }
+@media (min-width: 768px) { .kvTrack li { flex-basis: 48%; } }
 @media (min-width: 1024px) {
-  .sec01 .contWrap { min-height: 700px; }
-  .kvInner { padding-bottom: 120px; gap: 24px; max-width: 1760px; margin: 0 auto; width: 100%; }
-  .kvMeta { flex-direction: row; gap: 40px; font-size: 13px; }
+  .sec01 .contWrap { padding: calc(var(--header-h) + 32px) 0 64px; gap: 32px; max-width: 1760px; margin: 0 auto; }
+  .kvVideo .videoWrap { border-radius: 20px; }
+  .kvTrack { gap: 24px; }
+  .kvTrack li { flex-basis: calc((100% - 48px) / 3); border-radius: 20px; }
+  .kvDots { gap: 8px; margin-top: 24px; }
+  .kvDots button { width: 8px; height: 8px; }
+  .kvDots button.on { width: 24px; border-radius: 4px; }
 }
 
 /* ---------- 02 Story (검정, 가로 트랙) ---------- */

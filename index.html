@@ -16,31 +16,17 @@
 <meta property="og:image:height" content="630">
 <meta name="theme-color" content="#ffffff">
 <link rel="icon" href="images/favicon.png" type="image/png">
-<link rel="preload" as="image" href="images/main.jpg" media="(min-width: 768px)">
-<link rel="preload" as="image" href="images/main-sm.jpg" media="(max-width: 767px)">
+<link rel="preload" as="image" href="images/hammer-sm.jpg" media="(max-width: 767px)">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,500;125,600;125,700;125,800&display=swap">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="stylesheet" href="css/style.css">
-<script>try{if(sessionStorage.getItem("lc_intro_seen"))document.documentElement.classList.add("intro-skip");else document.documentElement.classList.add("intro-open");}catch(e){document.documentElement.classList.add("intro-open");}</script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"HealthClub","name":"라이칸짐 연수점","alternateName":"LYCAN FITNESS","image":"images/og.jpg","telephone":"+82-507-1462-3671","address":{"@type":"PostalAddress","streetAddress":"청능대로 75 6층","addressLocality":"연수구","addressRegion":"인천","addressCountry":"KR"},"geo":{"@type":"GeoCoordinates","latitude":37.4156283,"longitude":126.6745939},"openingHours":"Mo-Su 00:00-24:00","priceRange":"₩","sameAs":["https://map.naver.com/p/entry/place/1061751111","https://www.instagram.com/lycangym_yeonsu/","https://blog.naver.com/lycan100"]}
 </script>
 </head>
 <body>
-
-<!-- 인트로 영상: 첫 접속 시 전체 화면, 클릭·스크롤·키보드로 닫힘 -->
-<section class="intro" id="intro" aria-label="라이칸짐 인트로 영상" tabindex="-1">
-  <div class="intro-stage">
-    <video class="intro-video" autoplay muted loop playsinline preload="auto" poster="images/hall.jpg">
-      <source src="video/intro.mp4" type="video/mp4">
-    </video>
-    <div class="intro-shade" aria-hidden="true"></div>
-    <img class="intro-logo" src="images/logo-v-white.png" alt="LYCAN FITNESS" width="726" height="1056" draggable="false">
-    <button class="intro-cue" type="button" id="introEnter">ENTER<small>화면을 클릭하면 시작합니다</small></button>
-  </div>
-</section>
 
 <!-- 하단 고정 진행 라인 (도루코 bottomProgressLine) -->
 <div class="bottomProgressLine rule" aria-hidden="true">
@@ -126,27 +112,29 @@
 <main id="top">
 
   <!-- 01 KV -->
-  <section id="sec01" class="sec01 main" aria-labelledby="kv-title">
+  <section id="sec01" class="sec01 main" aria-label="라이칸짐 소개 영상과 시설 사진">
     <div class="contWrap">
-      <picture class="kvBg">
-        <source media="(max-width: 767px)" srcset="images/main-sm.jpg">
-        <img src="images/main.jpg" alt="라이칸짐 연수점 메인 홀" fetchpriority="high">
-      </picture>
-      <div class="kvShade" aria-hidden="true"></div>
-      <div class="kvInner">
-        <div class="motionTitle">
-          <p class="Display5 introText1" id="kv-title"><span class="w">BEYOND</span> <span class="w">LIMITS</span></p>
-        </div>
-        <div class="kvText">
-          <p class="Body2XL">연수동 24시간 프리미엄 피트니스<br>헬스·PT·기구 필라테스를 한곳에서</p>
-        </div>
-        <div class="kvBtns">
-          <a href="#program" class="roundBtnWhite BodyXS">프로그램 보기</a>
-          <a href="tel:0507-1462-3671" class="roundBtnRed BodyXS">무료 체험 문의</a>
-        </div>
+      <div class="kvVideo">
+        <video class="videoWrap" autoplay muted loop playsinline preload="auto" poster="images/hall.jpg">
+          <source src="video/intro.mp4" type="video/mp4">
+        </video>
       </div>
-      <div class="kvMeta BodyXS" aria-hidden="true">
-        <span>24H OPEN</span><span>YEONSU · INCHEON</span><span>SINCE 2025</span>
+      <div class="kvSlider" id="kvSlider" aria-label="시설 사진 슬라이드">
+        <ul class="kvTrack" id="kvTrack">
+          <li><img src="images/hammer-sm.jpg" srcset="images/hammer-sm.jpg 900w, images/hammer.jpg 1800w" sizes="(min-width:1024px) 33vw, 86vw" alt="해머스트렝스 존" fetchpriority="high"></li>
+          <li><img src="images/hall-sm.jpg" srcset="images/hall-sm.jpg 900w, images/hall.jpg 1800w" sizes="(min-width:1024px) 33vw, 86vw" alt="메인 홀" loading="lazy"></li>
+          <li><img src="images/cardio-sm.jpg" srcset="images/cardio-sm.jpg 900w, images/cardio.jpg 1800w" sizes="(min-width:1024px) 33vw, 86vw" alt="유산소 존" loading="lazy"></li>
+          <li><img src="images/machines-sm.jpg" srcset="images/machines-sm.jpg 900w, images/machines.jpg 1800w" sizes="(min-width:1024px) 33vw, 86vw" alt="머신 존" loading="lazy"></li>
+          <li><img src="images/pilates-reformer-sm.jpg" srcset="images/pilates-reformer-sm.jpg 900w, images/pilates-reformer.jpg 1800w" sizes="(min-width:1024px) 33vw, 86vw" alt="필라테스 리포머" loading="lazy"></li>
+          <li><img src="images/cybex-sm.jpg" srcset="images/cybex-sm.jpg 900w, images/cybex.jpg 1800w" sizes="(min-width:1024px) 33vw, 86vw" alt="싸이벡스 머신" loading="lazy"></li>
+          <li><img src="images/rack-sm.jpg" srcset="images/rack-sm.jpg 900w, images/rack.jpg 1800w" sizes="(min-width:1024px) 33vw, 86vw" alt="스미스머신·파워랙" loading="lazy"></li>
+          <li><img src="images/pilates-chair-sm.jpg" srcset="images/pilates-chair-sm.jpg 900w, images/pilates-chair.jpg 1800w" sizes="(min-width:1024px) 33vw, 86vw" alt="필라테스 체어" loading="lazy"></li>
+          <li><img src="images/selectorized-sm.jpg" srcset="images/selectorized-sm.jpg 900w, images/selectorized.jpg 1800w" sizes="(min-width:1024px) 33vw, 86vw" alt="셀렉터라이즈드 머신" loading="lazy"></li>
+          <li><img src="images/hammer-center-sm.jpg" srcset="images/hammer-center-sm.jpg 900w, images/hammer-center.jpg 1800w" sizes="(min-width:1024px) 33vw, 86vw" alt="해머스트렝스 오피셜 트레이닝 센터" loading="lazy"></li>
+          <li><img src="images/floor-sm.jpg" srcset="images/floor-sm.jpg 900w, images/floor.jpg 1800w" sizes="(min-width:1024px) 33vw, 86vw" alt="프리웨이트 존" loading="lazy"></li>
+          <li><img src="images/signage-sm.jpg" srcset="images/signage-sm.jpg 900w, images/signage.jpg 1800w" sizes="(min-width:1024px) 33vw, 86vw" alt="파트너 브랜드 사이니지" loading="lazy"></li>
+        </ul>
+        <div class="kvDots" id="kvDots" role="tablist" aria-label="슬라이드 선택"></div>
       </div>
     </div>
   </section>

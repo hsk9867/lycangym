@@ -3,33 +3,46 @@
   var doc = document.documentElement;
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // ---------- 인트로 영상 오버레이 (정글짐 방식): 클릭·휠·스와이프·키보드로 닫힘 ----------
-  var intro = document.getElementById('intro');
-  if (intro && !doc.classList.contains('intro-skip')) {
-    var ivid = intro.querySelector('.intro-video'), istage = intro.querySelector('.intro-stage');
-    var closed = false, touchY = null;
-    if (ivid && ivid.play) { var p = ivid.play(); if (p && p.catch) p.catch(function () {}); }
-    function closeIntro() {
-      if (closed) return; closed = true;
-      intro.classList.add('leaving');
-      doc.classList.remove('intro-open');
-      doc.classList.add('intro-done');
-      try { sessionStorage.setItem('lc_intro_seen', '1'); } catch (e) {}
-      var done = function () { if (ivid && ivid.pause) ivid.pause(); if (intro.parentNode) intro.parentNode.removeChild(intro); };
-      istage.addEventListener('transitionend', done, { once: true });
-      setTimeout(done, reduce ? 400 : 1000);
-    }
-    intro.addEventListener('click', closeIntro);
-    intro.addEventListener('wheel', function (e) { e.preventDefault(); if (Math.abs(e.deltaY) > 10) closeIntro(); }, { passive: false });
-    intro.addEventListener('touchstart', function (e) { touchY = e.touches[0].clientY; }, { passive: true });
-    intro.addEventListener('touchmove', function (e) { e.preventDefault(); if (touchY !== null && Math.abs(e.touches[0].clientY - touchY) > 40) closeIntro(); }, { passive: false });
-    document.addEventListener('keydown', function (e) {
-      if (closed) return;
-      if (['ArrowDown', 'PageDown', ' ', 'Enter', 'Escape', 'ArrowUp'].indexOf(e.key) > -1) { e.preventDefault(); closeIntro(); }
+  doc.classList.add('intro-done');
+
+  // ---------- 메인 시설 사진 슬라이드: 자동 넘김 + 스와이프 + 점 표시 ----------
+  var kvTrack = document.getElementById('kvTrack'), kvDots = document.getElementById('kvDots');
+  if (kvTrack && kvDots) {
+    var slides = Array.prototype.slice.call(kvTrack.children), kvIdx = 0, kvTimer = null, kvPause = false;
+    slides.forEach(function (_, i) {
+      var b = document.createElement('button'); b.type = 'button'; b.setAttribute('role', 'tab'); b.setAttribute('aria-label', (i + 1) + '번째 사진');
+      b.addEventListener('click', function () { goKv(i, true); });
+      kvDots.appendChild(b);
     });
-    intro.focus({ preventScroll: true });
-  } else if (doc.classList.contains('intro-skip')) {
-    doc.classList.add('intro-done');
+    var dots = Array.prototype.slice.call(kvDots.children);
+    function perView() { var w = slides[0].offsetWidth, gap = parseFloat(getComputedStyle(kvTrack).gap) || 0; return Math.max(1, Math.round((kvTrack.clientWidth - 2 * slides[0].offsetLeft + gap) / (w + gap))); }
+    function maxIdx() { return Math.max(0, slides.length - perView()); }
+    function goKv(i, user) {
+      kvIdx = Math.min(Math.max(0, i), maxIdx());
+      kvTrack.scrollTo({ left: slides[kvIdx].offsetLeft - slides[0].offsetLeft, behavior: reduce ? 'auto' : 'smooth' });
+      paint();
+      if (user) restart();
+    }
+    function paint() { dots.forEach(function (d, i) { d.classList.toggle('on', i === kvIdx); }); }
+    function tick() { if (document.hidden || kvPause) return; goKv(kvIdx >= maxIdx() ? 0 : kvIdx + 1); }
+    function restart() { clearInterval(kvTimer); if (!reduce) kvTimer = setInterval(tick, 3500); }
+    var st;
+    kvTrack.addEventListener('scroll', function () {
+      clearTimeout(st);
+      st = setTimeout(function () {
+        var x = kvTrack.scrollLeft, best = 0, bd = Infinity;
+        slides.forEach(function (s, i) { var d = Math.abs(s.offsetLeft - slides[0].offsetLeft - x); if (d < bd) { bd = d; best = i; } });
+        kvIdx = Math.min(best, maxIdx()); paint();
+      }, 80);
+    }, { passive: true });
+    kvTrack.addEventListener('pointerdown', function () { kvPause = true; }, { passive: true });
+    kvTrack.addEventListener('pointerup', function () { kvPause = false; restart(); }, { passive: true });
+    kvTrack.addEventListener('touchstart', function () { kvPause = true; }, { passive: true });
+    kvTrack.addEventListener('touchend', function () { kvPause = false; restart(); }, { passive: true });
+    kvTrack.addEventListener('mouseenter', function () { kvPause = true; });
+    kvTrack.addEventListener('mouseleave', function () { kvPause = false; });
+    window.addEventListener('resize', function () { goKv(kvIdx); });
+    paint(); restart();
   }
 
   // ---------- 헤더: 어두운 섹션 위에서는 흰색, 스크롤 다운 시 숨김 ----------
