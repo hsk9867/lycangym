@@ -70,7 +70,7 @@
     window.addEventListener('resize', function () { go(idx); });
     paint(); restart();
   }
-  [['kvTrack', 'kvDots'], ['baTrack', 'baDots']].forEach(function (p) {
+  [['kvTrack', 'kvDots'], ['baTrack', 'baDots'], ['rvTrack', 'rvDots']].forEach(function (p) {
     var t = document.getElementById(p[0]), d = document.getElementById(p[1]);
     if (t && d && t.children.length) initSlider(t, d);
   });
