@@ -93,11 +93,10 @@ html.intro-done .bottomProgressLine { opacity: 1; }
   .menuBtn { display: none; }
   .gnbWide { display: block; }
   .gnbWide ul { display: flex; gap: 36px; }
-  .gnbWide a { position: relative; font-size: 16px; font-weight: 500; display: inline-block; overflow: hidden; height: 24px; line-height: 24px; }
-  .gnbWide a::after { content: attr(data-kor); position: absolute; left: 0; top: 100%; width: 100%; text-align: left; font-weight: 600; }
-  .gnbWide a span, .gnbWide a { transition: transform .3s cubic-bezier(.16,1,.3,1); }
-  .gnbWide li:hover a { transform: translateY(-24px); }
-  .gnbWide li:hover a::after { transform: translateY(0); }
+  .gnbWide a { position: relative; font-size: 16px; font-weight: 500; display: inline-block; padding: 4px 0; line-height: 24px; transition: color .25s; }
+  .gnbWide a::after { content: ""; position: absolute; left: 0; bottom: 0; width: 100%; height: 2px; background: var(--red); transform: scaleX(0); transform-origin: right; transition: transform .35s cubic-bezier(.16,1,.3,1); }
+  .gnbWide li:hover a { color: var(--red); }
+  .gnbWide li:hover a::after, .gnbWide li.current a::after { transform: scaleX(1); transform-origin: left; }
   .logo img { width: 180px; }
   .headerRight .roundBtn { padding: 10px 24px; font-size: 14px; }
 }
