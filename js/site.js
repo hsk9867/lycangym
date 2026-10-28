@@ -77,7 +77,7 @@
 
   // ---------- 헤더: 어두운 섹션 위에서는 흰색, 스크롤 다운 시 숨김 ----------
   var header = document.getElementById('header');
-  var darkSections = Array.prototype.slice.call(document.querySelectorAll('.sec01'));
+  var darkSections = Array.prototype.slice.call(document.querySelectorAll('.sec01, .darkSec'));
   var lastY = 0;
   function onScroll() {
     var y = window.scrollY || 0;

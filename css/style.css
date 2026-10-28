@@ -92,7 +92,7 @@ html.intro-done .bottomProgressLine { opacity: 1; }
 @media (min-width: 1024px) {
   .menuBtn { display: none; }
   .gnbWide { display: block; }
-  .gnbWide ul { display: flex; gap: 48px; }
+  .gnbWide ul { display: flex; gap: 36px; }
   .gnbWide a { position: relative; font-size: 16px; font-weight: 500; display: inline-block; overflow: hidden; height: 24px; line-height: 24px; }
   .gnbWide a::after { content: attr(data-kor); position: absolute; left: 0; top: 100%; width: 100%; text-align: left; font-weight: 600; }
   .gnbWide a span, .gnbWide a { transition: transform .3s cubic-bezier(.16,1,.3,1); }
@@ -337,4 +337,84 @@ html.menu-open { overflow: hidden; }
   .footerWrap .top img { width: 180px; }
   .rightSection { width: 520px; }
   .footerMenu { gap: 48px; }
+}
+/* ---------- 서브페이지 (pt / health / pilates) ---------- */
+.gnbWide li.current a { color: var(--red); }
+.subHero { position: relative; background: #111; color: var(--white); overflow: hidden; }
+.subHero .bg { position: absolute; inset: 0; }
+.subHero .bg img { width: 100%; height: 100%; object-fit: cover; object-position: center 40%; opacity: .5; }
+.subHero .bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.75), rgba(0,0,0,.15)); }
+.subHero .inner { position: relative; display: flex; flex-direction: column; gap: 12px; padding-top: calc(var(--header-h) + clamp(80px, 16vw, 180px)); padding-bottom: clamp(56px, 10vw, 120px); }
+.subHero .BodyXL { color: var(--red); }
+.subHero .HeadL { color: var(--white); }
+.subHero .BodyXS { color: rgba(255,255,255,.8); }
+.subPage .titleBox { display: flex; flex-direction: column; gap: 16px; margin-bottom: 36px; }
+.subPage .titleBox .BodyXL { color: var(--red); }
+/* PT 단계 */
+.ptSteps { padding: clamp(48px, 8vw, 100px) 0; background: var(--white); }
+.stepList { display: flex; flex-direction: column; }
+.step { display: grid; grid-template-columns: 1fr; }
+.step .photo { aspect-ratio: 4/3; overflow: hidden; background: var(--gray1); }
+.step .photo img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(.16,1,.3,1); }
+.step:hover .photo img { transform: scale(1.03); }
+.step .text { background: #161616; color: var(--white); display: flex; flex-direction: column; justify-content: center; gap: 14px; padding: 36px var(--pad) 44px; }
+.step .num { font-family: var(--display); font-stretch: 125%; font-weight: 600; font-size: 13px; letter-spacing: .08em; color: var(--red); }
+.step .num span { color: rgba(255,255,255,.45); margin-left: 8px; font-weight: 500; }
+.step .HeadXS { color: var(--white); padding-bottom: 14px; border-bottom: 1px solid rgba(255,255,255,.25); }
+.step .BodyXS { color: rgba(255,255,255,.82); }
+/* 시설 소개 */
+.facSec, .pilSec { padding: clamp(60px, 10vw, 140px) 0; background: var(--white); }
+.facList { display: grid; grid-template-columns: 1fr; gap: 40px; }
+.facList .thumb { aspect-ratio: 4/3; overflow: hidden; background: var(--gray1); margin-bottom: 14px; border-radius: 12px; }
+.facList .thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(.16,1,.3,1); }
+.facList li:hover .thumb img { transform: scale(1.04); }
+.facList .BodyM { color: var(--red); margin-bottom: 4px; }
+.facList .HeadXS { margin-bottom: 8px; }
+.facList .BodyXS { color: var(--gray5); }
+.pilSec .split { margin-bottom: clamp(48px, 8vw, 100px); }
+.split { display: grid; grid-template-columns: 1fr; gap: 32px; }
+.split .media { aspect-ratio: 4/3; overflow: hidden; background: var(--gray1); border-radius: 12px; }
+.split .media img { width: 100%; height: 100%; object-fit: cover; }
+.split .copy { display: flex; flex-direction: column; gap: 18px; }
+.split .copy .BodyXL { color: var(--red); }
+.split .copy .BodyXS { color: var(--gray5); }
+.checks { display: flex; flex-direction: column; gap: 8px; }
+.checks li { position: relative; padding-left: 22px; }
+.checks li::before { content: ""; position: absolute; left: 0; top: .55em; width: 10px; height: 10px; border-radius: 50%; background: var(--red); }
+/* 가격표 */
+.priceSec { padding: clamp(60px, 10vw, 140px) 0; background: var(--gray1); }
+.priceBox { background: var(--white); border-radius: 16px; padding: 8px var(--pad) 20px; }
+.priceHead { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; padding: 14px 0; color: var(--gray4); border-bottom: 1px solid var(--ink); }
+.priceHead span:nth-child(2), .priceList .v { text-align: center; }
+.priceHead span:nth-child(3), .priceList .per { text-align: right; }
+.priceList li { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; align-items: center; padding: 18px 0; border-bottom: 1px solid var(--gray2); }
+.priceList li.best { background: linear-gradient(90deg, rgba(225,6,0,.06), rgba(225,6,0,0)); }
+.priceList .k { display: flex; align-items: center; gap: 8px; }
+.priceList .tag { font-family: var(--display); font-stretch: 125%; font-size: 10px; font-weight: 700; letter-spacing: .06em; color: var(--white); background: var(--red); border-radius: 999px; padding: 3px 8px; }
+.priceList .per { color: var(--gray5); }
+.priceBox .note { margin-top: 16px; color: var(--gray4); }
+/* 문의 */
+.subCta { padding: clamp(60px, 10vw, 140px) 0; background: var(--white); }
+.subCta .contWrap { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 14px; }
+.subCta .BodyXL { color: var(--red); }
+.subCta .BodyXS { color: var(--gray5); }
+.subCta .btns .roundBtnRed { color: var(--white); }
+.subCta .btns .roundBtn { color: var(--ink); }
+.subCta .btns { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 12px; }
+@media (min-width: 768px) { .facList { grid-template-columns: 1fr 1fr; gap: 48px 32px; } }
+@media (min-width: 1024px) {
+  .subPage .titleBox { margin-bottom: 56px; }
+  .step { grid-template-columns: 1fr 1fr; min-height: 520px; }
+  .step:nth-child(even) .photo { order: 2; }
+  .step .photo { aspect-ratio: auto; }
+  .step .text { padding: 64px 80px; gap: 18px; }
+  .step .num { font-size: 15px; }
+  .step .HeadXS { padding-bottom: 18px; }
+  .facList { gap: 64px 48px; }
+  .split { grid-template-columns: 1fr 1fr; gap: 112px; align-items: center; }
+  .split .copy { gap: 24px; }
+  .priceBox { padding: 16px 56px 32px; }
+  .priceHead { grid-template-columns: 1.2fr 1fr 1fr; padding: 18px 0; }
+  .priceList li { grid-template-columns: 1.2fr 1fr 1fr; padding: 26px 0; }
+  .priceList li.best { margin: 0 -56px; padding-left: 56px; padding-right: 56px; }
 }
