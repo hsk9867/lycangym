@@ -458,15 +458,15 @@ section[id] { scroll-margin-top: var(--header-h); }
 .tkSlider { position: relative; margin: 0 calc(-1 * var(--pad)); padding: 0 var(--pad); }
 .tkTrack { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
 .tkTrack::-webkit-scrollbar { display: none; }
-.tkTrack li { flex: 0 0 70%; scroll-snap-align: start; aspect-ratio: 3/4; overflow: hidden; border-radius: 14px; background: var(--gray1); }
-.tkTrack li.wide { flex-basis: 90%; aspect-ratio: auto; }
+.tkTrack li { flex: 0 0 78%; scroll-snap-align: start; aspect-ratio: 1/1; overflow: hidden; border-radius: 14px; background: var(--gray1); }
+.tkTrack li.wide { flex-basis: 100%; aspect-ratio: auto; }
 .tkTrack li img { width: 100%; height: 100%; object-fit: cover; object-position: 40% center; transition: transform 1.2s cubic-bezier(.16,1,.3,1); }
 .tkTrack li.wide img { object-position: 8% 40%; }
 .tkTrack li:hover img { transform: scale(1.04); }
 .tkDots { display: flex; justify-content: center; gap: 6px; margin-top: 18px; }
 .tkDots button { width: 6px; height: 6px; border-radius: 50%; background: var(--gray2); transition: background .3s, width .3s; }
 .tkDots button.on { background: var(--red); width: 18px; border-radius: 3px; }
-@media (min-width: 768px) { .tkTrack li { flex-basis: 40%; } }
+@media (min-width: 768px) { .tkTrack li { flex-basis: 40%; aspect-ratio: 3/4; } .tkTrack li.wide { flex-basis: calc(80% + 12px); } }
 .rvSlider { position: relative; margin: 0 calc(-1 * var(--pad)); padding: 0 var(--pad); }
 .sec05 .rvTrack { display: flex; flex-direction: row; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
 .sec05 .rvTrack::-webkit-scrollbar { display: none; }
