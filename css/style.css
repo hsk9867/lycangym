@@ -337,45 +337,6 @@ html.menu-open { overflow: hidden; }
   .rightSection { width: 520px; }
   .footerMenu { gap: 48px; }
 }
-/* ---------- 04-3 Community + 리뷰 슬라이드 ---------- */
-.secTalk { padding: clamp(60px, 10vw, 140px) 0; background: var(--white); }
-.secTalk .titleBox { display: flex; flex-direction: column; gap: 16px; margin-bottom: 36px; }
-.secTalk .titleBox .BodyXL { color: var(--red); }
-.secTalk .titleBox .BodyXS { color: var(--gray5); max-width: 560px; }
-.tkSlider { position: relative; margin: 0 calc(-1 * var(--pad)); padding: 0 var(--pad); }
-.tkTrack { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
-.tkTrack::-webkit-scrollbar { display: none; }
-.tkTrack li { flex: 0 0 70%; scroll-snap-align: start; aspect-ratio: 3/4; overflow: hidden; border-radius: 14px; background: var(--gray1); }
-.tkTrack li img { width: 100%; height: 100%; object-fit: cover; object-position: 40% center; transition: transform 1.2s cubic-bezier(.16,1,.3,1); }
-.tkTrack li:hover img { transform: scale(1.04); }
-.tkDots { display: flex; justify-content: center; gap: 6px; margin-top: 18px; }
-.tkDots button { width: 6px; height: 6px; border-radius: 50%; background: var(--gray2); transition: background .3s, width .3s; }
-.tkDots button.on { background: var(--red); width: 18px; border-radius: 3px; }
-@media (min-width: 768px) { .tkTrack li { flex-basis: 40%; } }
-.rvSlider { position: relative; margin: 0 calc(-1 * var(--pad)); padding: 0 var(--pad); }
-.sec05 .rvTrack { display: flex; flex-direction: row; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
-.sec05 .rvTrack::-webkit-scrollbar { display: none; }
-.sec05 .rvTrack li { flex: 0 0 86%; scroll-snap-align: start; padding: 28px 24px; border: 0; background: var(--white); border-radius: 16px; display: flex; }
-.sec05 .rvTrack blockquote { gap: 12px; }
-.sec05 .rvTrack .stars { color: var(--red); letter-spacing: 2px; font-size: 14px; }
-.sec05 .rvTrack .BodyXS { flex: 1; }
-.rvDots { display: flex; justify-content: center; gap: 6px; margin-top: 20px; }
-.rvDots button { width: 6px; height: 6px; border-radius: 50%; background: var(--gray2); transition: background .3s, width .3s; }
-.rvDots button.on { background: var(--red); width: 18px; border-radius: 3px; }
-@media (min-width: 768px) { .sec05 .rvTrack li { flex-basis: 48%; } }
-@media (min-width: 1024px) {
-  .secTalk .titleBox { margin-bottom: 56px; }
-  .tkTrack { gap: 24px; }
-  .tkTrack li { flex-basis: calc((100% - 72px) / 4); border-radius: 20px; }
-  .tkDots { gap: 8px; margin-top: 28px; }
-  .tkDots button { width: 8px; height: 8px; }
-  .tkDots button.on { width: 24px; border-radius: 4px; }
-  .sec05 .rvTrack { gap: 24px; }
-  .sec05 .rvTrack li { flex-basis: calc((100% - 48px) / 3); width: auto; padding: 40px 36px; border-radius: 20px; }
-  .rvDots { gap: 8px; margin-top: 32px; }
-  .rvDots button { width: 8px; height: 8px; }
-  .rvDots button.on { width: 24px; border-radius: 4px; }
-}
 /* ---------- 카카오 채널 / 플로팅 버튼 ---------- */
 .icoKakao { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M12 3C6.5 3 2 6.6 2 11c0 2.8 1.8 5.2 4.6 6.6L5.5 21l4.4-2.8c.7.1 1.4.2 2.1.2 5.5 0 10-3.6 10-8S17.5 3 12 3z'/%3E%3C/svg%3E"); }
 .floatSns { position: fixed; right: 16px; bottom: 20px; z-index: 95; display: flex; flex-direction: column; align-items: center; gap: 10px; }
@@ -488,4 +449,46 @@ section[id] { scroll-margin-top: var(--header-h); }
   .priceHead { grid-template-columns: 1.2fr 1fr 1fr; padding: 18px 0; }
   .priceList li { grid-template-columns: 1.2fr 1fr 1fr; padding: 26px 0; }
   .priceList li.best { margin: 0 -56px; padding-left: 56px; padding-right: 56px; }
+}
+/* ---------- 04-3 Community + 리뷰 슬라이드 ---------- */
+.secTalk { padding: clamp(60px, 10vw, 140px) 0; background: var(--white); }
+.secTalk .titleBox { display: flex; flex-direction: column; gap: 16px; margin-bottom: 36px; }
+.secTalk .titleBox .BodyXL { color: var(--red); }
+.secTalk .titleBox .BodyXS { color: var(--gray5); max-width: 560px; }
+.tkSlider { position: relative; margin: 0 calc(-1 * var(--pad)); padding: 0 var(--pad); }
+.tkTrack { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.tkTrack::-webkit-scrollbar { display: none; }
+.tkTrack li { flex: 0 0 70%; scroll-snap-align: start; aspect-ratio: 3/4; overflow: hidden; border-radius: 14px; background: var(--gray1); }
+.tkTrack li.wide { flex-basis: 90%; aspect-ratio: auto; }
+.tkTrack li img { width: 100%; height: 100%; object-fit: cover; object-position: 40% center; transition: transform 1.2s cubic-bezier(.16,1,.3,1); }
+.tkTrack li.wide img { object-position: 8% 40%; }
+.tkTrack li:hover img { transform: scale(1.04); }
+.tkDots { display: flex; justify-content: center; gap: 6px; margin-top: 18px; }
+.tkDots button { width: 6px; height: 6px; border-radius: 50%; background: var(--gray2); transition: background .3s, width .3s; }
+.tkDots button.on { background: var(--red); width: 18px; border-radius: 3px; }
+@media (min-width: 768px) { .tkTrack li { flex-basis: 40%; } }
+.rvSlider { position: relative; margin: 0 calc(-1 * var(--pad)); padding: 0 var(--pad); }
+.sec05 .rvTrack { display: flex; flex-direction: row; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.sec05 .rvTrack::-webkit-scrollbar { display: none; }
+.sec05 .rvTrack li { flex: 0 0 86%; scroll-snap-align: start; padding: 28px 24px; border: 0; background: var(--white); border-radius: 16px; display: flex; }
+.sec05 .rvTrack blockquote { gap: 12px; }
+.sec05 .rvTrack .stars { color: var(--red); letter-spacing: 2px; font-size: 14px; }
+.sec05 .rvTrack .BodyXS { flex: 1; }
+.rvDots { display: flex; justify-content: center; gap: 6px; margin-top: 20px; }
+.rvDots button { width: 6px; height: 6px; border-radius: 50%; background: var(--gray2); transition: background .3s, width .3s; }
+.rvDots button.on { background: var(--red); width: 18px; border-radius: 3px; }
+@media (min-width: 768px) { .sec05 .rvTrack li { flex-basis: 48%; } }
+@media (min-width: 1024px) {
+  .secTalk .titleBox { margin-bottom: 56px; }
+  .tkTrack { gap: 24px; }
+  .tkTrack li { flex-basis: calc((100% - 72px) / 4); border-radius: 20px; }
+  .tkTrack li.wide { flex-basis: calc((100% - 72px) / 2 + 24px); }
+  .tkDots { gap: 8px; margin-top: 28px; }
+  .tkDots button { width: 8px; height: 8px; }
+  .tkDots button.on { width: 24px; border-radius: 4px; }
+  .sec05 .rvTrack { gap: 24px; }
+  .sec05 .rvTrack li { flex-basis: calc((100% - 48px) / 3); width: auto; padding: 40px 36px; border-radius: 20px; }
+  .rvDots { gap: 8px; margin-top: 32px; }
+  .rvDots button { width: 8px; height: 8px; }
+  .rvDots button.on { width: 24px; border-radius: 4px; }
 }

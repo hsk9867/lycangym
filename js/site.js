@@ -41,7 +41,7 @@
       dotsEl.appendChild(b);
     });
     var dots = Array.prototype.slice.call(dotsEl.children);
-    function perView() { var w = slides[0].offsetWidth, gap = parseFloat(getComputedStyle(track).gap) || 0; return Math.max(1, Math.round((track.clientWidth + gap) / (w + gap))); }
+    function perView() { var w = Math.min.apply(null, slides.map(function (s) { return s.offsetWidth; })), gap = parseFloat(getComputedStyle(track).gap) || 0; return Math.max(1, Math.round((track.clientWidth + gap) / (w + gap))); }
     function maxIdx() { return Math.max(0, slides.length - perView()); }
     function go(i, user) {
       idx = Math.min(Math.max(0, i), maxIdx());
