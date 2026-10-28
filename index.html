@@ -41,14 +41,13 @@
 
 <!-- 플로팅 채널 버튼 -->
 <div class="floatSns" aria-label="빠른 문의">
-  <a href="http://pf.kakao.com/_ZVTDn" class="fKakao" target="_blank" rel="noopener"><span class="ic"></span><span class="BodyXS">카톡 상담</span></a>
+  <a href="http://pf.kakao.com/_ZVTDn" class="fKakao" target="_blank" rel="noopener" aria-label="카카오톡 채널 상담"><span class="ic"></span></a>
+  <a href="tel:0507-1462-3671" class="fTel" aria-label="전화 문의"><span class="ic"></span></a>
   <a href="https://www.instagram.com/lycangym_yeonsu/" class="fInsta" target="_blank" rel="noopener" aria-label="인스타그램"><span class="ic"></span></a>
-  <a href="https://blog.naver.com/lycan100" class="fBlog" target="_blank" rel="noopener" aria-label="네이버 블로그"><span class="ic"></span></a>
 </div>
 
 <header id="header" class="header">
   <div class="headerWrap">
-    <button type="button" class="menuBtn" id="menuOpen" aria-controls="gnb" aria-expanded="false" aria-label="메뉴 열기"><i></i><i></i></button>
     <nav class="gnbWide" aria-label="주 메뉴">
       <ul>
         <li><a href="#center" data-kor="센터">Center</a></li>
@@ -61,7 +60,7 @@
     </nav>
     <h1 class="logo"><a href="#top" aria-label="라이칸짐 홈"><img src="images/logo-h.png" alt="LYCAN FITNESS" width="1872" height="758"></a></h1>
     <div class="headerRight">
-      <a href="tel:0507-1462-3671" class="roundBtn BodyXS">INQUIRIES</a>
+      <button type="button" class="menuBtn" id="menuOpen" aria-controls="gnb" aria-expanded="false" aria-label="메뉴 열기"><i></i><i></i></button>
     </div>
   </div>
 
@@ -78,7 +77,8 @@
         <li>
           <button type="button" class="btn Head3XS" aria-expanded="false">Program <small>프로그램</small></button>
           <ul class="lnb BodyXS">
-            <li><a href="health.html">헬스 회원권</a></li>
+            <li><a href="health.html">헬스 시설</a></li>
+            <li><a href="health.html#price">헬스 이용권</a></li>
             <li><a href="pt.html">1:1 PT</a></li>
             <li><a href="pilates.html">기구 필라테스</a></li>
           </ul>
@@ -244,12 +244,15 @@
         <p class="HeadL">회원님들과 소통하는<br>라이칸짐</p>
         <p class="BodyXS">운동만 알려드리지 않습니다. 매일 인사하고, 자세를 봐드리고, 컨디션을 묻습니다. 회원님 한 분 한 분과 함께 가는 센터입니다.</p>
       </div>
-      <ul class="talkGrid">
-        <li class="reveal"><img src="images/talk-1.jpg" srcset="images/talk-1-sm.jpg 450w, images/talk-1.jpg 900w" sizes="(min-width:1024px) 22vw, 45vw" alt="회원과 함께한 트레이너" loading="lazy"></li>
-        <li class="reveal"><img src="images/talk-2.jpg" srcset="images/talk-2-sm.jpg 700w, images/talk-2.jpg 1400w" sizes="(min-width:1024px) 22vw, 45vw" alt="개인 운동 중 자세를 봐주는 트레이너" loading="lazy"></li>
-        <li class="reveal"><img src="images/talk-3.jpg" srcset="images/talk-3-sm.jpg 425w, images/talk-3.jpg 849w" sizes="(min-width:1024px) 22vw, 45vw" alt="회원과 트레이너" loading="lazy"></li>
-        <li class="reveal"><img src="images/talk-4.jpg" srcset="images/talk-4-sm.jpg 427w, images/talk-4.jpg 855w" sizes="(min-width:1024px) 22vw, 45vw" alt="회원과 트레이너" loading="lazy"></li>
-      </ul>
+      <div class="tkSlider reveal" id="tkSlider">
+        <ul class="tkTrack" id="tkTrack">
+          <li><img src="images/talk-1.jpg" srcset="images/talk-1-sm.jpg 450w, images/talk-1.jpg 900w" sizes="(min-width:1024px) 22vw, 70vw" alt="회원과 함께한 트레이너" loading="lazy"></li>
+          <li><img src="images/talk-2.jpg" srcset="images/talk-2-sm.jpg 700w, images/talk-2.jpg 1400w" sizes="(min-width:1024px) 22vw, 70vw" alt="개인 운동 중 자세를 봐주는 트레이너" loading="lazy"></li>
+          <li><img src="images/talk-3.jpg" srcset="images/talk-3-sm.jpg 425w, images/talk-3.jpg 849w" sizes="(min-width:1024px) 22vw, 70vw" alt="회원과 트레이너" loading="lazy"></li>
+          <li><img src="images/talk-4.jpg" srcset="images/talk-4-sm.jpg 427w, images/talk-4.jpg 855w" sizes="(min-width:1024px) 22vw, 70vw" alt="회원과 트레이너" loading="lazy"></li>
+        </ul>
+        <div class="tkDots" id="tkDots" role="tablist"></div>
+      </div>
     </div>
   </section>
 
@@ -397,7 +400,7 @@
           <ul class="subList"><li><a href="#center">시설 소개</a></li><li><a href="#visit">오시는 길</a></li></ul>
         </li>
         <li><a href="#center">Program</a>
-          <ul class="subList"><li><a href="health.html">헬스 회원권</a></li><li><a href="pt.html">1:1 PT</a></li><li><a href="pilates.html">기구 필라테스</a></li></ul>
+          <ul class="subList"><li><a href="health.html">헬스 시설</a></li><li><a href="health.html#price">헬스 이용권</a></li><li><a href="pt.html">1:1 PT</a></li><li><a href="pilates.html">기구 필라테스</a></li></ul>
         </li>
         <li><a href="#reviews">Review</a>
           <ul class="subList"><li><a href="#reviews">방문자 리뷰</a></li><li><a href="https://blog.naver.com/lycan100" target="_blank" rel="noopener">블로그 소식</a></li></ul>

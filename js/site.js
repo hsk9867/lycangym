@@ -70,9 +70,20 @@
     window.addEventListener('resize', function () { go(idx); });
     paint(); restart();
   }
-  [['kvTrack', 'kvDots'], ['baTrack', 'baDots'], ['rvTrack', 'rvDots']].forEach(function (p) {
+  [['kvTrack', 'kvDots'], ['baTrack', 'baDots'], ['rvTrack', 'rvDots'], ['tkTrack', 'tkDots']].forEach(function (p) {
     var t = document.getElementById(p[0]), d = document.getElementById(p[1]);
     if (t && d && t.children.length) initSlider(t, d);
+  });
+
+  // ---------- 제목 타이포그래피: 줄 단위로 감싸 순차 등장 ----------
+  var TT = '.titleBox .HeadL, .sec03 .introTitle, .subHero .HeadL, .split .copy .HeadL, .subCta .HeadL';
+  document.querySelectorAll(TT).forEach(function (el) {
+    if (el.getAttribute('data-split')) return;
+    el.setAttribute('data-split', '1');
+    var parts = el.innerHTML.split(/<br\s*\/?>/i);
+    el.innerHTML = parts.map(function (h, i) { return '<span class="ln"><span class="lnIn" style="--l:' + i + '">' + h + '</span></span>'; }).join('');
+    var box = el.parentNode; var ey = box && box.querySelector('.BodyXL'); if (ey && ey !== el) ey.classList.add('ey');
+    if (!el.closest('.reveal')) { el.classList.add('tt'); var hero = el.closest('.subHero'); setTimeout(function () { el.classList.add('in'); if (hero) hero.classList.add('in'); }, 80); }
   });
 
   // ---------- 헤더: 어두운 섹션 위에서는 흰색, 스크롤 다운 시 숨김 ----------
