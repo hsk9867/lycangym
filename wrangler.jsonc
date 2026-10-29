@@ -4,6 +4,12 @@
   "name": "lycangym",
   "main": "worker.js",
   "compatibility_date": "2025-01-01",
+  "workers_dev": true,   // lycangym.hsk9867.workers.dev 도 계속 열어 둔다(점검용)
+  // 커스텀 도메인 (라이칸짐.com = xn--oi2bw61a1wbh8g.com, Cloudflare 존에 DNS 레코드가 자동 생성됨)
+  "routes": [
+    { "pattern": "xn--oi2bw61a1wbh8g.com", "custom_domain": true },
+    { "pattern": "www.xn--oi2bw61a1wbh8g.com", "custom_domain": true }
+  ],
   "assets": {
     "directory": "./",
     "binding": "ASSETS",
