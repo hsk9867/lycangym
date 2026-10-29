@@ -1,0 +1,11 @@
+{
+  // 라이칸짐 연수점 — Cloudflare Workers Static Assets (정적 파일만, 서버 코드 없음)
+  // 관리자 페이지·방문 통계는 Supabase 를 브라우저에서 직접 호출한다 (js/sb-config.js)
+  "name": "lycangym",
+  "compatibility_date": "2025-01-01",
+  "assets": {
+    "directory": "./",
+    "not_found_handling": "404-page",
+    "html_handling": "auto-trailing-slash"
+  }
+}

@@ -1,0 +1,9 @@
+.git
+.wrangler
+node_modules
+wrangler.jsonc
+.assetsignore
+supabase
+deploy
+README.md
+*.bak

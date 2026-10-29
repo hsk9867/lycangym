@@ -1,5 +1,7 @@
 (function () {
   'use strict';
+  // cms.js 가 Supabase 저장값을 화면에 반영한 뒤(window.CMS_READY) 슬라이드·효과를 초기화한다
+  var run = function () {
   var doc = document.documentElement;
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -157,4 +159,7 @@
       history.replaceState(null, '', '#' + id);
     });
   });
+  };
+  var ready = window.CMS_READY;
+  if (ready && ready.then) ready.then(run, run); else run();
 })();
