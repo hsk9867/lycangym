@@ -3,7 +3,9 @@
 node_modules
 wrangler.jsonc
 .assetsignore
-supabase
+.gitignore
+worker.js
+migrations
 deploy
 README.md
 *.bak

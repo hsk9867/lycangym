@@ -14,10 +14,9 @@
   a{color:inherit}
   button,input,select,textarea{font:inherit;color:inherit}
   .wrap{max-width:1040px;margin:0 auto;padding:24px 16px 80px}
-  header.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+  header.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px;flex-wrap:wrap}
   header.top h1{font-size:18px;font-weight:800;letter-spacing:-.02em}
   header.top h1 span{color:var(--red)}
-  header.top .who{font-size:12px;color:var(--muted)}
   .tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
   .tabs button{padding:9px 14px;border:1px solid var(--line);background:#fff;border-radius:999px;font-weight:600;cursor:pointer}
   .tabs button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
@@ -28,18 +27,18 @@
   .field{display:grid;grid-template-columns:200px 1fr;gap:10px 16px;align-items:start;padding:12px 0;border-top:1px solid var(--line)}
   .field label{font-weight:700;font-size:13px;padding-top:8px}
   .field label small{display:block;font-weight:400;color:var(--muted);font-size:11.5px}
-  .field input[type=text],.field textarea,.row input[type=text],.row textarea,.row select,.login input{width:100%;padding:9px 11px;border:1px solid #ccc;border-radius:8px;background:#fff}
+  .field input[type=text],.field textarea,.row input[type=text],.row textarea,.row select,.login input,.pw input{width:100%;padding:9px 11px;border:1px solid #ccc;border-radius:8px;background:#fff}
   .field textarea{min-height:68px;resize:vertical}
   .actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:16px}
   .btn{padding:10px 16px;border-radius:9px;border:1px solid var(--ink);background:var(--ink);color:#fff;font-weight:700;cursor:pointer}
   .btn.ghost{background:#fff;color:var(--ink)}
-  .btn.red{background:var(--red);border-color:var(--red)}
   .btn.sm{padding:6px 10px;font-size:12px;border-radius:7px}
   .btn:disabled{opacity:.5;cursor:default}
   .msg{font-size:12.5px;color:var(--muted)}
   .msg.ok{color:#0a7a2f}.msg.err{color:var(--red)}
-  .login{max-width:360px;margin:60px auto;background:#fff;border:1px solid var(--line);border-radius:14px;padding:26px}
-  .login h1{font-size:18px;font-weight:800;margin-bottom:14px}
+  .login{max-width:380px;margin:60px auto;background:#fff;border:1px solid var(--line);border-radius:14px;padding:26px}
+  .login h1{font-size:18px;font-weight:800;margin-bottom:6px}
+  .login p.help{font-size:12.5px;color:var(--muted);margin-bottom:14px}
   .login input{margin-bottom:10px}
   table.rows{width:100%;border-collapse:collapse;margin-top:8px}
   table.rows th{font-size:11.5px;color:var(--muted);text-align:left;padding:6px 6px;border-bottom:1px solid var(--line)}
@@ -48,7 +47,6 @@
   .row textarea{min-height:56px}
   .grp{margin-top:22px;padding-top:18px;border-top:2px solid var(--ink)}
   .grp h3{font-size:15px;font-weight:800;margin-bottom:4px}
-  .grp .help{margin-bottom:10px}
   .thumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-top:10px}
   .thumb{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fafafa}
   .thumb img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}
@@ -72,28 +70,28 @@
   .two th{text-align:left;font-size:12px;color:var(--muted);padding:6px 4px;border-bottom:1px solid var(--line)}
   .two td{padding:6px 4px;border-bottom:1px solid var(--line);font-size:13px}
   .two td:last-child{text-align:right;font-weight:700}
+  .pw{max-width:420px}
+  .pw input{margin-bottom:8px}
   @media (max-width:720px){.field{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.two{grid-template-columns:1fr}.wrap{padding:16px 12px 60px}}
 </style>
 </head>
 <body>
 <div id="app"></div>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
-<script src="js/sb-config.js"></script>
 <script>
 (async function () {
   'use strict';
   const app = document.getElementById('app');
   const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-  const CFG = window.SB || {};
-  if (!CFG.url || !CFG.anon || !window.supabase) {
-    app.innerHTML = '<div class="login"><h1>설정이 필요합니다</h1><p class="msg">js/sb-config.js 에 Supabase URL 과 anon 키를 넣고 다시 배포해 주세요.</p></div>';
-    return;
-  }
-  const sb = window.supabase.createClient(CFG.url, CFG.anon);
+  const api = async (path, opt = {}) => {
+    const r = await fetch('/api/' + path, { credentials: 'same-origin', ...opt });
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error(d.error || ('오류 ' + r.status));
+    return d;
+  };
+  const postJson = (path, body) => api(path, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
 
-  // ───────── 문구 항목 정의 (data-cms 키 = 고객 화면의 data-cms 속성) ─────────
-  const PAGES = { '/': 'index.html', '/health': 'health.html', '/pt': 'pt.html', '/pilates': 'pilates.html' };
+  // ───────── 문구 항목 (data-cms 키 = 고객 화면의 data-cms 속성) ─────────
+  const PAGES = ['index.html', 'health.html', 'pt.html', 'pilates.html'];
   const FIELDS = [
     ['메인', 'home.kv.sub', '메인 작은 문구'], ['메인', 'home.kv.title', '메인 큰 제목', 'rich'],
     ['메인', 'intro.title', 'Introduce 제목', 'rich'],
@@ -106,70 +104,71 @@
     ['필라테스', 'pilates.hero.title', '필라테스 페이지 제목'], ['필라테스', 'pilates.intro.title', '필라테스 소개 제목', 'rich'], ['필라테스', 'pilates.price.note', '필라테스 가격 안내문'],
   ];
 
-  // ───────── 공통 ─────────
-  let content = {};          // key → value (서버 저장값)
+  let content = {};
   let defaults = { text: {}, lists: {}, reviews: [], slides: {} };
-  const docCache = {};
-  async function pageDoc(file) {
-    if (!docCache[file]) { const h = await fetch(file + '?admin=' + Date.now()).then(r => r.text()); docCache[file] = new DOMParser().parseFromString(h, 'text/html'); }
-    return docCache[file];
-  }
-  // 고객 화면 HTML 에서 기본값을 읽어 온다 (저장값이 없을 때 보여주고, "원래대로" 에 쓴다)
+  // 고객 화면 HTML 에서 기본값을 읽는다 (저장값이 없을 때 보여주고 "원래대로" 에 쓴다)
   async function loadDefaults() {
-    for (const file of Object.values(PAGES)) {
-      const d = await pageDoc(file);
+    for (const file of PAGES) {
+      const h = await fetch('/' + file + '?admin=' + Date.now()).then(r => r.text());
+      const d = new DOMParser().parseFromString(h, 'text/html');
       d.querySelectorAll('[data-cms]').forEach(el => {
         const k = el.getAttribute('data-cms'); if (k in defaults.text) return;
         const attr = el.getAttribute('data-cms-attr');
         defaults.text[k] = attr ? el.getAttribute(attr) : (el.getAttribute('data-cms-fmt') === 'rich' ? el.innerHTML.replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]+>/g, '').trim() : el.textContent.trim());
       });
       d.querySelectorAll('[data-cms-list]').forEach(ul => {
-        defaults.lists[ul.getAttribute('data-cms-list')] = [...ul.querySelectorAll('li')].map(li => ({ k: (li.querySelector('.k') || {}).firstChild ? li.querySelector('.k').firstChild.textContent.trim() : '', v: (li.querySelector('.v') || {}).textContent || '', per: (li.querySelector('.per') || {}).textContent || '', best: li.classList.contains('best') }));
+        defaults.lists[ul.getAttribute('data-cms-list')] = [...ul.querySelectorAll('li')].map(li => ({ k: li.querySelector('.k') && li.querySelector('.k').firstChild ? li.querySelector('.k').firstChild.textContent.trim() : '', v: (li.querySelector('.v') || {}).textContent || '', per: (li.querySelector('.per') || {}).textContent || '', best: li.classList.contains('best') }));
       });
       const rv = d.getElementById('rvTrack');
-      if (rv) defaults.reviews = [...rv.querySelectorAll('li')].map(li => ({ stars: (li.querySelector('.stars') || { textContent: '★★★★★' }).textContent.trim().length, text: (li.querySelector('.BodyXS') || {}).textContent || '', name: (li.querySelector('.BodyXL') || {}).firstChild ? li.querySelector('.BodyXL').firstChild.textContent.trim() : '', tag: (li.querySelector('.BodyXL small') || {}).textContent || '' }));
+      if (rv) defaults.reviews = [...rv.querySelectorAll('li')].map(li => ({ stars: (li.querySelector('.stars') || { textContent: '★★★★★' }).textContent.trim().length, text: (li.querySelector('.BodyXS') || {}).textContent || '', name: li.querySelector('.BodyXL') && li.querySelector('.BodyXL').firstChild ? li.querySelector('.BodyXL').firstChild.textContent.trim() : '', tag: (li.querySelector('.BodyXL small') || {}).textContent || '' }));
       [['kvTrack', 'slides.kv'], ['baTrack', 'slides.ba'], ['tkTrack', 'slides.tk']].forEach(p => {
         const ul = d.getElementById(p[0]);
         if (ul) defaults.slides[p[1]] = [...ul.querySelectorAll('li')].map(li => { const im = li.querySelector('img'); return { src: im.getAttribute('src'), alt: im.getAttribute('alt') || '', wide: li.classList.contains('wide') }; });
       });
     }
   }
-  async function loadContent() {
-    const { data, error } = await sb.from('site_content').select('key,value');
-    if (error) throw error;
-    content = {}; (data || []).forEach(r => { content[r.key] = r.value; });
-  }
-  async function save(key, value) {
-    const { error } = await sb.from('site_content').upsert({ key, value, updated_at: new Date().toISOString() });
-    if (error) throw error; content[key] = value;
-  }
-  async function reset(key) {
-    const { error } = await sb.from('site_content').delete().eq('key', key);
-    if (error) throw error; delete content[key];
-  }
+  async function loadContent() { content = await api('content'); }
+  async function save(key, value) { await api('content/' + key, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(value) }); content[key] = value; }
+  async function reset(key) { await api('content/' + key, { method: 'DELETE' }); delete content[key]; }
   function note(el, text, cls) { el.textContent = text; el.className = 'msg ' + (cls || ''); if (cls === 'ok') setTimeout(() => { if (el.textContent === text) el.textContent = ''; }, 2500); }
 
-  // ───────── 로그인 ─────────
-  async function renderLogin(err) {
-    app.innerHTML = '<form class="login" id="loginForm"><h1>라이칸짐 <span style="color:var(--red)">관리자</span></h1><input type="email" id="email" placeholder="이메일" autocomplete="username" required><input type="password" id="pw" placeholder="비밀번호" autocomplete="current-password" required><button class="btn" style="width:100%">로그인</button><p class="msg err" style="margin-top:10px">' + esc(err || '') + '</p></form>';
+  // ───────── 로그인 / 처음 설정 ─────────
+  function renderLogin(setup, err) {
+    app.innerHTML = '<form class="login" id="loginForm"><h1>라이칸짐 <span style="color:var(--red)">관리자</span></h1><p class="help">' + (setup ? '처음 접속입니다. 앞으로 쓸 관리자 비밀번호를 정해 주세요 (8자 이상).' : '관리자 비밀번호를 입력하세요.') + '</p><input type="password" id="pw" placeholder="비밀번호" autocomplete="' + (setup ? 'new-password' : 'current-password') + '" required minlength="8">' + (setup ? '<input type="password" id="pw2" placeholder="비밀번호 다시 입력" autocomplete="new-password" required minlength="8">' : '') + '<button class="btn" style="width:100%">' + (setup ? '비밀번호 설정하고 시작' : '로그인') + '</button><p class="msg err" style="margin-top:10px">' + esc(err || '') + '</p></form>';
     document.getElementById('loginForm').addEventListener('submit', async e => {
       e.preventDefault();
-      const { error } = await sb.auth.signInWithPassword({ email: document.getElementById('email').value.trim(), password: document.getElementById('pw').value });
-      if (error) renderLogin('로그인 실패: ' + error.message); else boot();
+      const pw = document.getElementById('pw').value;
+      try {
+        if (setup) { if (pw !== document.getElementById('pw2').value) throw new Error('두 비밀번호가 다릅니다.'); await postJson('setup', { password: pw }); }
+        else await postJson('login', { password: pw });
+        boot();
+      } catch (err) { renderLogin(setup, err.message); }
     });
   }
 
-  // ───────── 화면 ─────────
   async function boot() {
-    const { data: { session } } = await sb.auth.getSession();
-    if (!session) return renderLogin();
-    app.innerHTML = '<div class="wrap"><header class="top"><h1>라이칸짐 <span>관리자</span></h1><div><span class="who">' + esc(session.user.email) + '</span> <button class="btn ghost sm" id="logout">로그아웃</button> <a class="btn sm" href="/" target="_blank">사이트 보기</a></div></header><p class="msg">불러오는 중…</p></div>';
-    document.getElementById('logout').onclick = async () => { await sb.auth.signOut(); renderLogin(); };
-    try { await Promise.all([loadDefaults(), loadContent()]); } catch (e) { app.querySelector('.wrap').insertAdjacentHTML('beforeend', '<p class="msg err">불러오기 실패: ' + esc(e.message) + ' (schema.sql 을 실행했는지 확인)</p>'); return; }
+    let me; try { me = await api('me'); } catch (e) { app.innerHTML = '<div class="login"><h1>연결 실패</h1><p class="help">' + esc(e.message) + '<br>D1 마이그레이션(npx wrangler d1 migrations apply lycangym-db --remote)을 실행했는지 확인하세요.</p></div>'; return; }
+    if (me.setup) return renderLogin(true);
+    if (!me.admin) return renderLogin(false);
+    app.innerHTML = '<div class="wrap"><header class="top"><h1>라이칸짐 <span>관리자</span></h1><div><button class="btn ghost sm" id="pwBtn">비밀번호 변경</button> <button class="btn ghost sm" id="logout">로그아웃</button> <a class="btn sm" href="/" target="_blank">사이트 보기</a></div></header><p class="msg">불러오는 중…</p></div>';
+    document.getElementById('logout').onclick = async () => { await postJson('logout', {}); renderLogin(false); };
+    document.getElementById('pwBtn').onclick = () => { document.querySelectorAll('.tabs button').forEach(x => x.classList.toggle('on', x.dataset.t === 'pw')); document.querySelectorAll('.panel').forEach(p => p.classList.toggle('on', p.id === 'p-pw')); };
+    try { await Promise.all([loadDefaults(), loadContent()]); } catch (e) { app.querySelector('.wrap').insertAdjacentHTML('beforeend', '<p class="msg err">불러오기 실패: ' + esc(e.message) + '</p>'); return; }
     const wrap = app.querySelector('.wrap'); wrap.querySelector('.msg').remove();
-    wrap.insertAdjacentHTML('beforeend', '<nav class="tabs"><button data-t="stats" class="on">방문 통계</button><button data-t="text">문구</button><button data-t="prices">가격표</button><button data-t="reviews">리뷰</button><button data-t="photos">사진</button></nav><section class="panel on" id="p-stats"></section><section class="panel" id="p-text"></section><section class="panel" id="p-prices"></section><section class="panel" id="p-reviews"></section><section class="panel" id="p-photos"></section>');
+    wrap.insertAdjacentHTML('beforeend', '<nav class="tabs"><button data-t="stats" class="on">방문 통계</button><button data-t="text">문구</button><button data-t="prices">가격표</button><button data-t="reviews">리뷰</button><button data-t="photos">사진</button></nav><section class="panel on" id="p-stats"></section><section class="panel" id="p-text"></section><section class="panel" id="p-prices"></section><section class="panel" id="p-reviews"></section><section class="panel" id="p-photos"></section><section class="panel" id="p-pw"></section>');
     wrap.querySelectorAll('.tabs button').forEach(b => b.onclick = () => { wrap.querySelectorAll('.tabs button').forEach(x => x.classList.toggle('on', x === b)); wrap.querySelectorAll('.panel').forEach(p => p.classList.toggle('on', p.id === 'p-' + b.dataset.t)); });
-    renderText(); renderPrices(); renderReviews(); renderPhotos(); renderStats();
+    renderText(); renderPrices(); renderReviews(); renderPhotos(); renderStats(); renderPw();
+  }
+
+  // 비밀번호 변경
+  function renderPw() {
+    const p = document.getElementById('p-pw');
+    p.innerHTML = '<h2>비밀번호 변경</h2><p class="help">8자 이상. 바꾼 뒤에도 현재 로그인은 유지됩니다.</p><form class="pw" id="pwForm"><input type="password" id="cur" placeholder="현재 비밀번호" autocomplete="current-password" required><input type="password" id="nx" placeholder="새 비밀번호" autocomplete="new-password" required minlength="8"><input type="password" id="nx2" placeholder="새 비밀번호 다시" autocomplete="new-password" required minlength="8"><div class="actions"><button class="btn">변경</button><span class="msg" id="pwMsg"></span></div></form>';
+    p.querySelector('#pwForm').addEventListener('submit', async e => {
+      e.preventDefault(); const m = p.querySelector('#pwMsg');
+      if (p.querySelector('#nx').value !== p.querySelector('#nx2').value) return note(m, '새 비밀번호 두 개가 다릅니다.', 'err');
+      try { await postJson('password', { current: p.querySelector('#cur').value, next: p.querySelector('#nx').value }); note(m, '바꿨습니다.', 'ok'); e.target.reset(); } catch (err) { note(m, err.message, 'err'); }
+    });
   }
 
   // 문구
@@ -220,7 +219,7 @@
   function renderReviews() {
     const p = document.getElementById('p-reviews');
     const rows = (Array.isArray(content.reviews) && content.reviews.length) ? content.reviews : defaults.reviews;
-    p.innerHTML = '<h2>리뷰</h2><p class="help">메인 리뷰 슬라이드에 나오는 후기입니다. 네이버 리뷰를 그대로 옮기되 이름은 일부 가려 주세요.</p><table class="rows"><thead><tr><th style="width:70px">별점</th><th>내용</th><th style="width:150px">이름</th><th style="width:120px">구분</th><th></th></tr></thead><tbody></tbody></table><div class="actions"><button class="btn ghost sm" id="rvAdd">리뷰 추가</button><button class="btn sm" id="rvSave">저장</button><button class="btn ghost sm" id="rvReset">원래대로</button><span class="msg" id="rvMsg"></span></div>';
+    p.innerHTML = '<h2>리뷰</h2><p class="help">메인 리뷰 슬라이드에 나오는 후기입니다. 네이버 리뷰를 옮길 때 이름은 일부 가려 주세요.</p><table class="rows"><thead><tr><th style="width:70px">별점</th><th>내용</th><th style="width:150px">이름</th><th style="width:120px">구분</th><th></th></tr></thead><tbody></tbody></table><div class="actions"><button class="btn ghost sm" id="rvAdd">리뷰 추가</button><button class="btn sm" id="rvSave">저장</button><button class="btn ghost sm" id="rvReset">원래대로</button><span class="msg" id="rvMsg"></span></div>';
     const tb = p.querySelector('tbody');
     const addRow = r => tb.insertAdjacentHTML('beforeend', '<tr class="row"><td><select data-f="stars">' + [5, 4, 3, 2, 1].map(n => '<option' + (n === (r.stars || 5) ? ' selected' : '') + '>' + n + '</option>').join('') + '</select></td><td><textarea data-f="text">' + esc(r.text) + '</textarea></td><td><input type="text" data-f="name" value="' + esc(r.name) + '"></td><td><input type="text" data-f="tag" value="' + esc(r.tag) + '" placeholder="예: PT 회원"></td><td class="ctl"><button class="btn ghost sm" data-up>↑</button> <button class="btn ghost sm" data-del>삭제</button></td></tr>');
     rows.forEach(addRow);
@@ -241,22 +240,21 @@
         const r = Math.min(1, max / Math.max(img.width, img.height)); const c = document.createElement('canvas');
         c.width = Math.round(img.width * r); c.height = Math.round(img.height * r);
         c.getContext('2d').drawImage(img, 0, 0, c.width, c.height); URL.revokeObjectURL(url);
-        c.toBlob(b => b ? res(b) : rej(new Error('변환 실패')), 'image/jpeg', 0.84);
+        c.toBlob(b => b ? res(b) : rej(new Error('변환 실패')), 'image/jpeg', 0.82);
       };
       img.onerror = () => rej(new Error('이미지를 읽을 수 없습니다')); img.src = url;
     });
   }
-  async function upload(file, folder) {
-    const blob = await resizeImage(file, 1800);
-    const path = folder + '/' + Date.now() + '-' + Math.random().toString(36).slice(2, 8) + '.jpg';
-    const { error } = await sb.storage.from('site').upload(path, blob, { contentType: 'image/jpeg', cacheControl: '31536000' });
-    if (error) throw error;
-    return sb.storage.from('site').getPublicUrl(path).data.publicUrl;
+  async function upload(file) {
+    let blob = await resizeImage(file, 1600);
+    if (blob.size > 1400 * 1024) blob = await resizeImage(file, 1200);
+    const d = await api('upload', { method: 'POST', headers: { 'Content-Type': 'image/jpeg' }, body: blob });
+    return d.url;
   }
   function renderPhotos() {
     const p = document.getElementById('p-photos');
-    const groups = [['slides.kv', '메인 시설 사진 슬라이드', 'kv'], ['slides.ba', 'Before & After 슬라이드', 'ba'], ['slides.tk', 'Community(소통) 사진 슬라이드', 'tk']];
-    p.innerHTML = '<h2>사진</h2><p class="help">사진을 올리면 자동으로 크기를 줄여 저장합니다(긴 변 1800px). 순서를 바꾸거나 지운 뒤 꼭 저장을 누르세요.</p>' + groups.map(g => '<div class="grp" data-g="' + g[0] + '" data-folder="' + g[2] + '"><h3>' + g[1] + '</h3><div class="thumbs"></div><div class="actions"><label class="btn ghost sm" style="cursor:pointer">사진 추가 <input type="file" accept="image/*" multiple hidden></label><button class="btn sm" data-save>저장</button><button class="btn ghost sm" data-reset>원래대로</button><span class="msg"></span></div></div>').join('');
+    const groups = [['slides.kv', '메인 시설 사진 슬라이드'], ['slides.ba', 'Before & After 슬라이드'], ['slides.tk', 'Community(소통) 사진 슬라이드']];
+    p.innerHTML = '<h2>사진</h2><p class="help">사진을 올리면 자동으로 크기를 줄여 저장합니다(긴 변 1600px). 순서를 바꾸거나 지운 뒤 꼭 저장을 누르세요.</p>' + groups.map(g => '<div class="grp" data-g="' + g[0] + '"><h3>' + g[1] + '</h3><div class="thumbs"></div><div class="actions"><label class="btn ghost sm" style="cursor:pointer">사진 추가 <input type="file" accept="image/*" multiple hidden></label><button class="btn sm" data-save>저장</button><button class="btn ghost sm" data-reset>원래대로</button><span class="msg"></span></div></div>').join('');
     p.querySelectorAll('.grp').forEach(g => {
       const key = g.dataset.g, box = g.querySelector('.thumbs'), msg = g.querySelector('.msg');
       let list = ((Array.isArray(content[key]) && content[key].length) ? content[key] : (defaults.slides[key] || [])).map(x => ({ ...x }));
@@ -273,38 +271,27 @@
       box.addEventListener('input', e => { const t = e.target.closest('.thumb'); if (!t) return; const s = list[+t.dataset.i]; if (e.target.hasAttribute('data-alt')) s.alt = e.target.value; if (e.target.hasAttribute('data-wide')) s.wide = e.target.checked; });
       g.querySelector('input[type=file]').onchange = async e => {
         const files = [...e.target.files]; e.target.value = '';
-        for (const f of files) { try { note(msg, f.name + ' 올리는 중…'); const url = await upload(f, g.dataset.folder); list.push({ src: url, alt: '', wide: false }); draw(); } catch (err) { note(msg, '업로드 실패: ' + err.message, 'err'); return; } }
+        for (const f of files) { try { note(msg, f.name + ' 올리는 중…'); const url = await upload(f); list.push({ src: url, alt: '', wide: false }); draw(); } catch (err) { note(msg, '업로드 실패: ' + err.message, 'err'); return; } }
         note(msg, '올렸습니다. 저장을 눌러 반영하세요.', 'ok');
       };
       g.querySelector('[data-save]').onclick = async () => { try { await save(key, list); note(msg, '저장했습니다.', 'ok'); } catch (e) { note(msg, '저장 실패: ' + e.message, 'err'); } };
-      g.querySelector('[data-reset]').onclick = async () => { if (!confirm('원래 사진 구성으로 되돌릴까요? (올린 파일은 남아 있습니다)')) return; try { await reset(key); renderPhotos(); } catch (e) { alert(e.message); } };
+      g.querySelector('[data-reset]').onclick = async () => { if (!confirm('원래 사진 구성으로 되돌릴까요?')) return; try { await reset(key); renderPhotos(); } catch (e) { alert(e.message); } };
     });
   }
 
   // 방문 통계
   async function renderStats() {
     const p = document.getElementById('p-stats');
-    p.innerHTML = '<h2>방문 통계</h2><p class="help">최근 30일. 같은 브라우저가 같은 페이지를 30분 안에 다시 열면 한 번으로 셉니다. 관리자 페이지는 세지 않습니다.</p><p class="msg">불러오는 중…</p>';
-    const since = new Date(Date.now() - 30 * 86400000).toISOString();
-    const { data, error } = await sb.from('visits').select('ts,page,ref,sid').gte('ts', since).order('ts', { ascending: false }).limit(20000);
-    if (error) { p.querySelector('.msg').textContent = '불러오기 실패: ' + error.message; return; }
-    const rows = data || [];
-    const kst = t => new Date(new Date(t).getTime() + 9 * 3600000).toISOString().slice(0, 10);
-    const today = kst(new Date()), d7 = kst(new Date(Date.now() - 6 * 86400000));
-    const agg = (filter) => { const r = rows.filter(filter); return { pv: r.length, uv: new Set(r.map(x => x.sid || Math.random())).size }; };
-    const sToday = agg(r => kst(r.ts) === today), s7 = agg(r => kst(r.ts) >= d7), s30 = agg(() => true);
-    const days = []; for (let i = 29; i >= 0; i--) days.push(kst(new Date(Date.now() - i * 86400000)));
-    const byDay = {}; rows.forEach(r => { const d = kst(r.ts); byDay[d] = (byDay[d] || 0) + 1; });
-    const max = Math.max(1, ...days.map(d => byDay[d] || 0));
-    const count = (f) => { const m = {}; rows.forEach(r => { const k = f(r); m[k] = (m[k] || 0) + 1; }); return Object.entries(m).sort((a, b) => b[1] - a[1]).slice(0, 8); };
-    const pages = count(r => r.page), refs = count(r => r.ref || '직접 입력 · 북마크 · 앱');
-    p.innerHTML = '<h2>방문 통계</h2><p class="help">최근 30일 기준. 같은 브라우저가 같은 페이지를 30분 안에 다시 열면 한 번으로 셉니다.</p>' +
-      '<div class="stats"><div class="stat"><b>' + sToday.pv + '</b><span>오늘 조회</span><small>방문자 ' + sToday.uv + '명</small></div><div class="stat"><b>' + s7.pv + '</b><span>최근 7일 조회</span><small>방문자 ' + s7.uv + '명</small></div><div class="stat"><b>' + s30.pv + '</b><span>최근 30일 조회</span><small>방문자 ' + s30.uv + '명</small></div><div class="stat"><b>' + (s30.pv ? Math.round(s30.pv / 30 * 10) / 10 : 0) + '</b><span>하루 평균 조회</span><small>30일 기준</small></div></div>' +
-      '<div class="bars">' + days.map(d => '<div style="height:' + Math.round((byDay[d] || 0) / max * 100) + '%" title="' + d + ' · ' + (byDay[d] || 0) + '"><i>' + (byDay[d] || 0) + '</i></div>').join('') + '</div><div class="axis"><span>' + days[0].slice(5) + '</span><span>' + days[15].slice(5) + '</span><span>오늘</span></div>' +
-      '<div class="two"><div><table><thead><tr><th>페이지</th><th>조회</th></tr></thead><tbody>' + (pages.map(x => '<tr><td>' + esc(x[0]) + '</td><td>' + x[1] + '</td></tr>').join('') || '<tr><td colspan="2">아직 기록이 없습니다</td></tr>') + '</tbody></table></div><div><table><thead><tr><th>유입 경로</th><th>조회</th></tr></thead><tbody>' + (refs.map(x => '<tr><td>' + esc(x[0]) + '</td><td>' + x[1] + '</td></tr>').join('') || '<tr><td colspan="2">아직 기록이 없습니다</td></tr>') + '</tbody></table></div></div>';
+    p.innerHTML = '<h2>방문 통계</h2><p class="msg">불러오는 중…</p>';
+    let s; try { s = await api('stats'); } catch (e) { p.querySelector('.msg').textContent = '불러오기 실패: ' + e.message; return; }
+    const max = Math.max(1, ...s.days.map(d => d.pv));
+    const tbl = (rows, head) => '<table><thead><tr><th>' + head + '</th><th>조회</th></tr></thead><tbody>' + (rows.map(x => '<tr><td>' + esc(x[0]) + '</td><td>' + x[1] + '</td></tr>').join('') || '<tr><td colspan="2">아직 기록이 없습니다</td></tr>') + '</tbody></table>';
+    p.innerHTML = '<h2>방문 통계</h2><p class="help">최근 30일 기준. 같은 브라우저가 같은 페이지를 30분 안에 다시 열면 한 번으로 셉니다. 관리자 페이지는 세지 않습니다.</p>' +
+      '<div class="stats"><div class="stat"><b>' + s.today.pv + '</b><span>오늘 조회</span><small>방문자 ' + s.today.uv + '명</small></div><div class="stat"><b>' + s.week.pv + '</b><span>최근 7일 조회</span><small>방문자 ' + s.week.uv + '명</small></div><div class="stat"><b>' + s.month.pv + '</b><span>최근 30일 조회</span><small>방문자 ' + s.month.uv + '명</small></div><div class="stat"><b>' + (s.month.pv ? Math.round(s.month.pv / 30 * 10) / 10 : 0) + '</b><span>하루 평균 조회</span><small>30일 기준</small></div></div>' +
+      '<div class="bars">' + s.days.map(d => '<div style="height:' + Math.round(d.pv / max * 100) + '%" title="' + d.day + ' · ' + d.pv + '"><i>' + d.pv + '</i></div>').join('') + '</div><div class="axis"><span>' + s.days[0].day.slice(5) + '</span><span>' + s.days[15].day.slice(5) + '</span><span>오늘</span></div>' +
+      '<div class="two"><div>' + tbl(s.pages, '페이지') + '</div><div>' + tbl(s.refs, '유입 경로') + '</div></div>';
   }
 
-  sb.auth.onAuthStateChange((ev) => { if (ev === 'SIGNED_OUT') renderLogin(); });
   boot();
 })();
 </script>

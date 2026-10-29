@@ -1,27 +1,17 @@
-// 라이칸짐 CMS 로더: Supabase site_content 에 저장된 값으로 화면 문구·가격표·리뷰·사진을 덮어쓴다.
+// 라이칸짐 CMS 로더: 관리자 페이지에서 저장한 값(/api/content, D1)으로 화면 문구·가격표·리뷰·사진을 덮어쓴다.
 // site.js 보다 먼저 읽히며, window.CMS_READY(Promise) 가 끝난 뒤 site.js 가 슬라이드 등을 초기화한다.
-// Supabase 설정이 비어 있거나 응답이 늦으면(1.5초) 원래 HTML 그대로 보여준다.
+// 응답이 늦으면(1.5초) 원래 HTML 그대로 보여준다. file:// 로 열었을 때는 건너뛴다.
 (function () {
   'use strict';
-  var SB = window.SB || {};
   var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
   var rich = function (s) { return esc(s).replace(/\r?\n/g, '<br>'); };
 
   function fetchContent() {
-    if (!SB.url || !SB.anon || !window.fetch) return Promise.resolve(null);
+    if (!window.fetch || location.protocol === 'file:') return Promise.resolve(null);
     var ctl = 'AbortController' in window ? new AbortController() : null;
     var timer = setTimeout(function () { if (ctl) ctl.abort(); }, 1500);
-    return fetch(SB.url + '/rest/v1/site_content?select=key,value', {
-      headers: { apikey: SB.anon, Authorization: 'Bearer ' + SB.anon },
-      signal: ctl ? ctl.signal : undefined
-    }).then(function (r) { return r.ok ? r.json() : null; })
-      .then(function (rows) {
-        clearTimeout(timer);
-        if (!rows) return null;
-        var map = {};
-        rows.forEach(function (r) { map[r.key] = r.value; });
-        return map;
-      })
+    return fetch('/api/content', { signal: ctl ? ctl.signal : undefined })
+      .then(function (r) { clearTimeout(timer); return r.ok ? r.json() : null; })
       .catch(function () { clearTimeout(timer); return null; });
   }
 
@@ -58,7 +48,7 @@
     }).join('');
   }
 
-  // 사진 슬라이드: [{src, alt, wide}] — 관리자가 올린 사진이 있으면 트랙을 통째로 바꾼다
+  // 사진 슬라이드: [{src, alt, wide}] — 관리자가 저장한 목록이 있으면 트랙을 통째로 바꾼다
   function applySlides(map) {
     [['kvTrack', 'slides.kv'], ['baTrack', 'slides.ba'], ['tkTrack', 'slides.tk']].forEach(function (p) {
       var ul = document.getElementById(p[0]), rows = map[p[1]];

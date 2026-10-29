@@ -1,9 +1,8 @@
-// 방문 기록: 페이지를 열 때 Supabase visits 테이블에 한 줄 넣는다 (anon 키, insert 만 허용).
+// 방문 기록: 페이지를 열 때 /api/track (D1 visits) 에 한 줄 넣는다.
 // 개인정보 없음 — 페이지 경로, 유입 사이트(도메인만), 브라우저별 무작위 ID, 화면 폭.
 (function () {
   'use strict';
-  var SB = window.SB || {};
-  if (!SB.url || !SB.anon || !window.fetch) return;
+  if (!window.fetch || location.protocol === 'file:') return;
   if (/\/admin/.test(location.pathname)) return;
   if (navigator.webdriver) return;
   var sid = '';
@@ -24,9 +23,8 @@
   } catch (e) {}
   var ref = '';
   try { if (document.referrer) { var u = new URL(document.referrer); if (u.host !== location.host) ref = u.host; } } catch (e) {}
-  fetch(SB.url + '/rest/v1/visits', {
-    method: 'POST', keepalive: true,
-    headers: { apikey: SB.anon, Authorization: 'Bearer ' + SB.anon, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
+  fetch('/api/track', {
+    method: 'POST', keepalive: true, headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ page: page.slice(0, 200), ref: ref.slice(0, 200) || null, sid: sid || null, w: window.innerWidth || null })
   }).catch(function () {});
 })();
