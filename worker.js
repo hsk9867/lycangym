@@ -196,6 +196,7 @@ function rangeOf(url) {
   return { from, to, days, prevFrom: shiftDay(from, -days), prevTo: shiftDay(from, -1), today };
 }
 
+const DIMS = [['device', false], ['browser', false], ['os', false], ['country', false], ['city', true], ['screen', true], ['lang', true]];
 async function stats(env, url) {
   const rg = rangeOf(url);
   const { from, to, prevFrom: pf, prevTo: pt } = rg;
@@ -214,14 +215,7 @@ async function stats(env, url) {
     /*8*/ q(`SELECT source, medium, campaign, COUNT(*) pv, COUNT(DISTINCT vid) uv FROM hits WHERE ${V} AND (medium IS NOT NULL OR campaign IS NOT NULL) GROUP BY source, medium, campaign ORDER BY uv DESC LIMIT 30`, from, to),
     /*9*/ q(`SELECT path, COUNT(*) pv, COUNT(DISTINCT vid) uv FROM hits WHERE ${V} GROUP BY path ORDER BY pv DESC LIMIT 30`, from, to),
     /*10*/ q(`SELECT path, COUNT(*) c FROM (SELECT path, MIN(ts) m FROM hits WHERE ${V} GROUP BY day, vid) GROUP BY path ORDER BY c DESC LIMIT 20`, from, to),
-    /*11*/ q(`SELECT 'device' dim, device k, COUNT(DISTINCT vid) uv, COUNT(*) pv FROM hits WHERE ${V} GROUP BY device
-       UNION ALL SELECT 'browser', browser, COUNT(DISTINCT vid), COUNT(*) FROM hits WHERE ${V} GROUP BY browser
-       UNION ALL SELECT 'os', os, COUNT(DISTINCT vid), COUNT(*) FROM hits WHERE ${V} GROUP BY os
-       UNION ALL SELECT 'country', country, COUNT(DISTINCT vid), COUNT(*) FROM hits WHERE ${V} GROUP BY country
-       UNION ALL SELECT 'city', city, COUNT(DISTINCT vid), COUNT(*) FROM hits WHERE ${V} AND city IS NOT NULL GROUP BY city
-       UNION ALL SELECT 'screen', screen, COUNT(DISTINCT vid), COUNT(*) FROM hits WHERE ${V} AND screen IS NOT NULL GROUP BY screen
-       UNION ALL SELECT 'lang', lang, COUNT(DISTINCT vid), COUNT(*) FROM hits WHERE ${V} AND lang IS NOT NULL GROUP BY lang
-       ORDER BY dim, uv DESC`, from, to, from, to, from, to, from, to, from, to, from, to, from, to),
+    /*11*/ q(`SELECT 1`), // (예전 UNION ALL 자리 — D1 은 compound SELECT 항 수를 제한해 아래 29~35 로 분리)
     /*12*/ q(`SELECT name, COUNT(*) c, COUNT(DISTINCT vid) u FROM hits WHERE type='event' AND day BETWEEN ? AND ? GROUP BY name ORDER BY c DESC`, from, to),
     /*13*/ q(`SELECT COUNT(DISTINCT vid) n FROM hits WHERE ts > ?`, now - LIVE_SEC),
     /*14*/ q(`SELECT ts, type, name, path, source, ref_host, device, browser, country, city, dur FROM hits WHERE type <> 'leave' OR dur >= 10 ORDER BY ts DESC LIMIT 50`),
@@ -239,10 +233,12 @@ async function stats(env, url) {
     /*26*/ q(`SELECT day, name, COUNT(*) c FROM hits WHERE type='event' AND day BETWEEN ? AND ? GROUP BY day, name ORDER BY day`, from, to),
     /*27*/ q(`SELECT COUNT(*) n FROM hits WHERE type='view'`),
     /*28*/ q(`SELECT MIN(day) d FROM hits`),
+    // 29~35: 기기·브라우저·OS·국가·도시·화면·언어 (D1 제한 때문에 UNION ALL 대신 따로 조회)
+    ...DIMS.map(([col, notNull]) => q(`SELECT ${col} k, COUNT(DISTINCT vid) uv, COUNT(*) pv FROM hits WHERE ${V}${notNull ? ` AND ${col} IS NOT NULL` : ''} GROUP BY ${col} ORDER BY uv DESC LIMIT 30`, from, to)),
   ]);
   const r = rows.map((x) => x.results || []);
   const dims = {};
-  for (const row of r[11]) (dims[row.dim] = dims[row.dim] || []).push({ k: row.k || '알 수 없음', uv: row.uv, pv: row.pv });
+  DIMS.forEach(([col], i) => { dims[col] = r[29 + i].map((row) => ({ k: row.k || '알 수 없음', uv: row.uv, pv: row.pv })); });
   return {
     range: rg,
     totals: { ...r[0][0], events: r[2][0].c, eventUsers: r[2][0].u, newUsers: r[15][0].n, bounce: r[23][0].n, dur: r[19][0].dur, depth: r[19][0].depth, leaves: r[19][0].n },
