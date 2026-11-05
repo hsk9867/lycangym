@@ -500,10 +500,10 @@ section[id] { scroll-margin-top: var(--header-h); }
 .secFaq .titleBox .BodyXS { color: var(--gray5); max-width: 560px; }
 .faqList { border-top: 2px solid var(--ink); }
 .faqList details { border-bottom: 1px solid var(--gray2); }
-.faqList summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 20px 0; }
+.faqList summary { list-style: none; cursor: pointer; display: flex; justify-content: flex-start; align-items: center; gap: 16px; padding: 20px 0; text-align: left; }
 .faqList summary::-webkit-details-marker { display: none; }
 .faqList summary::before { content: "Q"; flex: none; font-family: var(--display); font-stretch: 125%; font-weight: 700; color: var(--red); width: 28px; }
-.faqList summary::after { content: ""; flex: none; width: 10px; height: 10px; border-right: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink); transform: rotate(45deg); margin-right: 6px; transition: transform .3s; }
+.faqList summary::after { content: ""; flex: none; width: 10px; height: 10px; border-right: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink); transform: rotate(45deg); margin: 0 6px 0 auto; transition: transform .3s; }
 .faqList details[open] summary::after { transform: rotate(-135deg); }
 .faqList summary > * { flex: 1; }
 .faqList .faqA { color: var(--gray5); padding: 0 0 22px 28px; max-width: 820px; }
