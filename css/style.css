@@ -492,3 +492,27 @@ section[id] { scroll-margin-top: var(--header-h); }
   .rvDots button { width: 8px; height: 8px; }
   .rvDots button.on { width: 24px; border-radius: 4px; }
 }
+
+/* ---------- 05-2 FAQ (자주 묻는 질문) ---------- */
+.secFaq { padding: clamp(60px, 10vw, 140px) 0; background: var(--white); }
+.secFaq .titleBox { display: flex; flex-direction: column; gap: 16px; margin-bottom: 36px; }
+.secFaq .titleBox .BodyXL { color: var(--red); }
+.secFaq .titleBox .BodyXS { color: var(--gray5); max-width: 560px; }
+.faqList { border-top: 2px solid var(--ink); }
+.faqList details { border-bottom: 1px solid var(--gray2); }
+.faqList summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 20px 0; }
+.faqList summary::-webkit-details-marker { display: none; }
+.faqList summary::before { content: "Q"; flex: none; font-family: var(--display); font-stretch: 125%; font-weight: 700; color: var(--red); width: 28px; }
+.faqList summary::after { content: ""; flex: none; width: 10px; height: 10px; border-right: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink); transform: rotate(45deg); margin-right: 6px; transition: transform .3s; }
+.faqList details[open] summary::after { transform: rotate(-135deg); }
+.faqList summary > * { flex: 1; }
+.faqList .faqA { color: var(--gray5); padding: 0 0 22px 28px; max-width: 820px; }
+.faqMore { display: flex; flex-wrap: wrap; justify-content: flex-start; gap: 12px; margin-top: 32px; }
+.faqMore .roundBtnRed { color: var(--white); }
+@media (min-width: 1024px) {
+  .secFaq .titleBox { margin-bottom: 48px; }
+  .faqList summary { padding: 26px 0; }
+  .faqList summary::before { width: 40px; }
+  .faqList .faqA { padding: 0 0 28px 40px; }
+  .faqMore { margin-top: 40px; }
+}

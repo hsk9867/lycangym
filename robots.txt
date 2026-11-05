@@ -1,6 +1,48 @@
+# 라이칸짐 연수점 — 검색엔진·AI 크롤러 모두 허용 (관리자·API 제외)
 User-agent: *
 Allow: /
 Disallow: /admin
 Disallow: /admin.html
+Disallow: /api/
+
+# 네이버 · 다음 · 구글 · 빙
+User-agent: Yeti
+Allow: /
+User-agent: Daum
+Allow: /
+User-agent: Googlebot
+Allow: /
+User-agent: Bingbot
+Allow: /
+
+# AI 검색 · 생성형 AI (ChatGPT · Claude · Perplexity · Gemini · Apple)
+User-agent: GPTBot
+Allow: /
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: Claude-SearchBot
+Allow: /
+User-agent: anthropic-ai
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: Perplexity-User
+Allow: /
+User-agent: Google-Extended
+Allow: /
+User-agent: Applebot
+Allow: /
+User-agent: Applebot-Extended
+Allow: /
+User-agent: Amazonbot
+Allow: /
+User-agent: DuckAssistBot
+Allow: /
+User-agent: meta-externalagent
+Allow: /
 
 Sitemap: https://xn--oi2bw61a1wbh8g.com/sitemap.xml

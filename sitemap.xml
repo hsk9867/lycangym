@@ -1,7 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://xn--oi2bw61a1wbh8g.com/</loc><lastmod>2026-10-29</lastmod></url>
-  <url><loc>https://xn--oi2bw61a1wbh8g.com/health</loc><lastmod>2026-10-29</lastmod></url>
-  <url><loc>https://xn--oi2bw61a1wbh8g.com/pt</loc><lastmod>2026-10-29</lastmod></url>
-  <url><loc>https://xn--oi2bw61a1wbh8g.com/pilates</loc><lastmod>2026-10-29</lastmod></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+  <url>
+    <loc>https://xn--oi2bw61a1wbh8g.com/</loc>
+    <lastmod>2026-11-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image><image:loc>https://xn--oi2bw61a1wbh8g.com/images/og.jpg</image:loc><image:title>라이칸짐 연수점</image:title></image:image>
+    <image:image><image:loc>https://xn--oi2bw61a1wbh8g.com/images/hammer.jpg</image:loc><image:title>해머스트렝스 존</image:title></image:image>
+    <image:image><image:loc>https://xn--oi2bw61a1wbh8g.com/images/hall.jpg</image:loc><image:title>라이칸짐 연수점 메인 홀</image:title></image:image>
+    <image:image><image:loc>https://xn--oi2bw61a1wbh8g.com/images/pilates-reformer.jpg</image:loc><image:title>여성 전용 기구 필라테스 리포머</image:title></image:image>
+    <image:image><image:loc>https://xn--oi2bw61a1wbh8g.com/images/talk-staff.jpg</image:loc><image:title>라이칸짐 연수점 직원들</image:title></image:image>
+    <video:video>
+      <video:thumbnail_loc>https://xn--oi2bw61a1wbh8g.com/images/og.jpg</video:thumbnail_loc>
+      <video:title>라이칸짐 연수점 시설 소개 영상</video:title>
+      <video:description>인천 연수동 24시간 헬스장 라이칸짐 연수점의 해머스트렝스 존, 프리웨이트 존, 필라테스 공간을 담은 소개 영상</video:description>
+      <video:content_loc>https://xn--oi2bw61a1wbh8g.com/video/intro.mp4</video:content_loc>
+      <video:publication_date>2026-10-29</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://xn--oi2bw61a1wbh8g.com/health</loc>
+    <lastmod>2026-11-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image><image:loc>https://xn--oi2bw61a1wbh8g.com/images/hammer.jpg</image:loc><image:title>해머스트렝스 오피셜 트레이닝 센터</image:title></image:image>
+    <image:image><image:loc>https://xn--oi2bw61a1wbh8g.com/images/cybex.jpg</image:loc><image:title>싸이벡스 셀렉토라이즈 머신</image:title></image:image>
+    <image:image><image:loc>https://xn--oi2bw61a1wbh8g.com/images/shower.jpg</image:loc><image:title>프라이빗 1인 샤워실</image:title></image:image>
+  </url>
+  <url>
+    <loc>https://xn--oi2bw61a1wbh8g.com/pt</loc>
+    <lastmod>2026-11-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image><image:loc>https://xn--oi2bw61a1wbh8g.com/images/pt-main.jpg</image:loc><image:title>라이칸짐 1:1 PT 수업</image:title></image:image>
+  </url>
+  <url>
+    <loc>https://xn--oi2bw61a1wbh8g.com/pilates</loc>
+    <lastmod>2026-11-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image><image:loc>https://xn--oi2bw61a1wbh8g.com/images/pilates-reformer.jpg</image:loc><image:title>기구 필라테스 리포머</image:title></image:image>
+    <image:image><image:loc>https://xn--oi2bw61a1wbh8g.com/images/pilates-chair.jpg</image:loc><image:title>기구 필라테스 체어</image:title></image:image>
+  </url>
 </urlset>
